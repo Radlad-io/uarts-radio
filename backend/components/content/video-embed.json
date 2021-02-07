@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_content_video_embeds",
+  "info": {
+    "name": "video_embed",
+    "icon": "photo-video"
+  },
+  "options": {},
+  "attributes": {
+    "URL": {
+      "type": "string"
+    },
+    "embed_caption": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_content_featured_staffs",
+  "info": {
+    "name": "featured_staff",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "users": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    }
+  }
+}

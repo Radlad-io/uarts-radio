@@ -1,0 +1,21 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.2.0",
+    "moment": "^2.29.1",
+    "next": "10.0.5",
+    "react": "17.0.1",
+    "react-awesome-slider": "^4.1.0",
+    "react-dom": "17.0.1",
+    "react-markdown": "^5.0.3",
+    "react-moment": "^1.1.1",
+    "tailwindcss": "^2.0.2"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_content_paragraphs",
+  "info": {
+    "name": "Markdown",
+    "icon": "paragraph",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "body": {
+      "type": "richtext"
+    },
+    "drop_cap": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

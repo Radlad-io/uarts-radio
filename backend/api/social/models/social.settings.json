@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "socials",
+  "info": {
+    "name": "social",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "username": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "enumeration",
+      "enum": [
+        "Instagram",
+        "Facebook",
+        "Twitter",
+        "TicTok",
+        "YouTube",
+        "Vimeo",
+        "LinkedIn"
+      ]
+    },
+    "show": {
+      "via": "socials",
+      "model": "show"
+    },
+    "user": {
+      "via": "socials",
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}

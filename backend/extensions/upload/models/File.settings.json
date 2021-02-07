@@ -1,0 +1,7 @@
+{
+    "thumb": {
+        "type": "string",
+        "configurable": false,
+        "required": true
+      }
+}

@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_content_featured_posts",
+  "info": {
+    "name": "featured_posts",
+    "icon": "eye"
+  },
+  "options": {},
+  "attributes": {
+    "posts": {
+      "collection": "post"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

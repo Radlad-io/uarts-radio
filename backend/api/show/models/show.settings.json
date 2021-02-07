@@ -1,0 +1,80 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shows",
+  "info": {
+    "name": "show",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "socials": {
+      "collection": "social",
+      "via": "show"
+    },
+    "creators": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "created"
+    },
+    "editors": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "editor"
+    },
+    "episodes": {
+      "collection": "post",
+      "via": "show"
+    },
+    "tags": {
+      "collection": "tag",
+      "via": "shows"
+    },
+    "cover_image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "content.block-quote",
+        "content.carousel",
+        "content.featured-staff",
+        "content.paragraph",
+        "content.video-embed",
+        "content.featured-posts"
+      ]
+    },
+    "cover_video": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}
