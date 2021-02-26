@@ -4,48 +4,45 @@ import Moment from "react-moment";
 import Layout from '../../components/Layout'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getShowBySlug  } from '../../lib/api'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
 import ContentParser from "../../components/ContentParser";
 import Carousel from "../../components/Carousel";
 import Footer from "../../components/Footer";
 import Hero from "../../components/Hero";
+import Navbar from "../../components/Navbar";
 
 
-export default function Post({ shows }) {
-
-  const props = shows[0];
+export default function Post({ show }) {
+  const { title, tags, content } = show;
 
   return (
-    <Layout title={props.title}>
+    <Layout title={title}>
+      <Navbar />
       <div className="container mx-auto px-3 xl:px-20">
-      <div className='pt-6'>
-        <Link href='/'>
-          <a className='text-red-500'>&larr; Back to home</a>
-        </Link>
-      </div>
       
       <section className='flex flex-col md:flex-row md:space-x-6 py-10'>
         <div className='w-full md:w-auto'>
-          <Hero content={shows} />
+          <Hero content={show} />
         </div>
         
       </section>
 
-      <h1 className='text-black'>{props.title}</h1>
+      <h1 className='text-black'>{title}</h1>
 
       <br />
       <hr />
       <p className="tag-list">
         Tags
         </p>
-        {props.tags.map((tag) => (
+        {tags.map((tag) => (
               <Link href="/posts"><p className="tag">{tag.tag}</p></Link>
           ))} 
       </div>
 
       <br />
-      {props.content.map((content) => (
+      {content.map((content) => (
           <ContentParser content={content} />
         ))}
       <br />
@@ -113,11 +110,32 @@ export default function Post({ shows }) {
 
 
 // Queries Strapi for a post with a matching slug
-export async function getStaticProps({ params }) {
-  const shows = await fetchQuery('shows', `?slug=${params.slug}`)
-  return {
-    props: {
-      shows
+// export async function getStaticProps({ params }) {
+//   const shows = await fetchQuery('shows', `?slug=${params.slug}`)
+//   return {
+//     props: {
+//       shows
+//     }
+//   }
+// }
+export async function getStaticProps( context ) {
+  // TODO: Add support for preview state
+  console.log(context.params.slug)
+  const show = await getShowBySlug(context.params.slug)
+  console.log(show)
+  if (context.preview === true){
+    const preview = context.preview
+    return {
+      props: {
+        post,
+        preview
+      }
+    }
+  } else {
+    return {
+      props: {
+        show
+      }
     }
   }
 }

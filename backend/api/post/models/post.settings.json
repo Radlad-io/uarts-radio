@@ -8,7 +8,8 @@
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": true,
+    "previewable": true
   },
   "attributes": {
     "title": {
@@ -57,8 +58,8 @@
       "dominant": true
     },
     "show": {
-      "via": "episodes",
-      "model": "show"
+      "model": "show",
+      "via": "episodes"
     },
     "tags": {
       "collection": "tag",
@@ -76,14 +77,19 @@
       ],
       "min": 1
     },
-    "cover_video": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "videos"
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Article",
+        "Podcast",
+        "Video",
+        "Event",
+        "Exhibition",
+        "Interview",
+        "Opinion"
       ],
-      "plugin": "upload",
-      "required": false
+      "required": true,
+      "default": "Article"
     }
   }
 }

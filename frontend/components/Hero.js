@@ -8,10 +8,10 @@ function Hero({ content }) {
     <>
       <section>
         {
-          content[0].cover_video ? 
+          content.cover_video ? 
           <video 
             autoplay="true" 
-            src={`${baseUrl}${content[0].cover_video.url}`} 
+            src={`${baseUrl}${content.cover_video.url}`} 
             type="video/mp4"
             muted="true"
             loop="true"
@@ -19,7 +19,7 @@ function Hero({ content }) {
           :
           <Image
             className='rounded-lg w-full sm:w-64'
-            src={`${baseUrl}${content[0].cover_image.url}`}
+            src={`${baseUrl}${content.cover_image.url}`}
             alt={content.title}
             width={600}
             height={350}

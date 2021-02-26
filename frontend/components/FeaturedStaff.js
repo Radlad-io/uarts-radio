@@ -17,7 +17,6 @@ function FeaturedStaff({ staff }) {
                                     src={`${baseUrl}${staff.profile_image.url}`}
                                     width={650}
                                     height={650}
-                                    loading='lazy'
                                     objectFit='cover'
                                     object-position='top'
                                 />
@@ -26,7 +25,7 @@ function FeaturedStaff({ staff }) {
                                 </h4>
                                 <h6>{staff.major.replace("_"," ")}</h6>
                                 {/* TODO: Append and ellipsis if content length exceeds slice length */}
-                                <p>{staff.short_biography.slice(0,300)}</p>
+                                <p>{staff.short_biography.length >= 300 ? staff.short_biography.slice(0,300) + "..." : staff.short_biography}</p>
                             </a>
                         </Link>
                     </div>

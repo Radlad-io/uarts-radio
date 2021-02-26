@@ -1,26 +1,32 @@
 // frontent/pages/movie/[slug].js
 import Moment from "react-moment";
 
-import Layout from '../../components/Layout'
 import Link from 'next/link'
 import Image from 'next/image'
+
+import { getPreviewPostBySlug, getPostBySlug  } from '../../lib/api'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
+import Layout from '../../components/Layout'
 import ContentParser from "../../components/ContentParser";
-import Carousel from "../../components/Carousel";
 import Footer from "../../components/Footer";
+import PreviewBanner from "../../components/PreviewBanner";
+import StaffList from "../../components/StaffList";
+import Navbar from "../../components/Navbar";
 
 
-export default function Post({ post }) {
+export default function Post({ post, preview }) {
 
-  const props = post[0];
+  const props = post;
 
   return (
     <Layout title={props.title}>
+      { preview === true && props.published_at === null ? <PreviewBanner /> : ""}
+      <Navbar />
       <div className="container mx-auto px-3 xl:px-20">
       <div className="relative bg-white overflow-hidden">
         <div className="hidden lg:block lg:absolute lg:inset-0" aria-hidden="true">
-          <svg className="absolute top-0 left-1/2 transform translate-x-64 -translate-y-8" width="640" height="784" fill="none" viewBox="0 0 640 784">
+          <svg className="absolute top-10 left-1/2 transform translate-x-64 -translate-y-8" width="640" height="784" fill="none" viewBox="0 0 640 784">
             <defs>
               <pattern id="9ebea6f4-a1f5-4d96-8c4e-4c2abf658047" x="118" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
                 <rect x="0" y="0" width="4" height="4" className="text-gray-200" fill="currentColor" />
@@ -35,24 +41,36 @@ export default function Post({ post }) {
             <div className="lg:grid lg:grid-cols-12 lg:gap-8">
               <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
                 <h1>
-                  <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base"><Moment format="MMM Do YYYY">{props.published_at}</Moment></span>
+                  <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">{props.published_at === null ? "This Post has not been published yet" : <Moment format="MMM Do YYYY">{props.published_at}</Moment>}</span>
                   <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
                     <span className="block text-gray-900 tracking-wide">{props.title}</span>
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua ad ad non deserunt sunt.
+                  {props.description}
                 </p>
                 <br />
-                <p><b>Author:</b>{props.authors.map((author) => (<Link href={`/staff/${author.slug}`}><a classNamea="authors"> {author.name}</a></Link>))} </p>
-                <p><b>Photographer: </b>{ props.photographers[0] ? `${props.photographers[0].name}` : "" }</p>
-                <p className="tag-list">
-              Tags
-            </p>
-            
-            {props.tags.map((tag) => (
-                <Link href={`/explore?tags.tag=${tag.tag}`}><a className="tag">{tag.tag}</a></Link>
-            ))}
+                <p>
+                  <b>
+                  {props.authors.length < 1 ? null : props.authors.length === 1 ? "Author: " : "Authors: "}
+                  </b>
+                  {props.authors.length > 0 ? <StaffList staff={props.authors} /> : ""} </p>
+                <p>
+                  <b>
+                    {props.editors.length < 1 ? null : props.editors.length === 1 ? "Editor: " : "Editors: "}
+                  </b>
+                  {props.editors.length > 0 ? <StaffList staff={props.editors} /> : ""}
+                </p>
+                <p>
+                  <b>
+                    {props.photographers.length < 1 ? null : props.photographers.length === 1 ? "Photographer: " : "Photographers: "}
+                  </b>
+                    {props.photographers.length > 0 ? <StaffList staff={props.photographers} /> : ""}
+                </p>
+                <br />
+                {props.tags.map((tag) => (
+                    <Link href={`/explore?tags.slug=${tag.slug}`}><a className="tag">{tag.tag}</a></Link>
+                ))}
               
               </div>
               <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
@@ -65,8 +83,7 @@ export default function Post({ post }) {
                   <rect y="72" width="640" height="640" className="text-gray-50" fill="currentColor" />
                   <rect x="118" width="404" height="784" fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" />
                 </svg>
-                <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-                  <button type="button" className="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <div className="relative mx-auto w-full rounded-lg lg:max-w-md">
                     <span className="sr-only">Watch our video to learn more</span>
                     <Image
                       className='rounded-lg w-full sm:w-64'
@@ -77,7 +94,7 @@ export default function Post({ post }) {
                       preload='true'
                       objectFit='cover'
                     />
-                  </button>
+
                 </div>
               </div>
             </div>
@@ -92,6 +109,7 @@ export default function Post({ post }) {
       </div>
 
       <br />
+      {console.log(props.content)}
       {props.content.map((content) => (
           <ContentParser content={content} />
         ))}
@@ -126,18 +144,11 @@ export default function Post({ post }) {
           color: #D22630;
         }
 
-        .tag-list {
-          text-transform: uppercase;
-          font-size: .8rem;
-          font-weight: 700;
-          display: inline-block;
-          padding-right: 1.5rem;
-        }
 
         .tag {
           display: inline-block;
           font-size: .8rem;
-          margin: 1rem 1rem 1.5rem 0;
+          margin: 1rem 1rem 0 0;
           background-color: #D22630;
           color: white;
           padding: .4rem .6rem;
@@ -148,6 +159,7 @@ export default function Post({ post }) {
 
         .tag:hover {
           cursor:pointer;
+          color: white;
           background-color: #DB5159;
         }
 
@@ -159,11 +171,21 @@ export default function Post({ post }) {
 
 
 // Queries Strapi for a post with a matching slug
-export async function getStaticProps({ params }) {
-  const post = await fetchQuery('posts', `?slug=${params.slug}`)
-  return {
-    props: {
-      post
+export async function getStaticProps( context ) {
+  const post = context.preview === true ? await getPreviewPostBySlug(context.params.slug) : await getPostBySlug(context.params.slug)
+  if (context.preview === true){
+    const preview = context.preview
+    return {
+      props: {
+        post,
+        preview
+      }
+    }
+  } else {
+    return {
+      props: {
+        post
+      }
     }
   }
 }

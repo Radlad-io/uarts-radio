@@ -9,10 +9,6 @@
   "attributes": {
     "body": {
       "type": "richtext"
-    },
-    "drop_cap": {
-      "type": "boolean",
-      "default": true
     }
   }
 }

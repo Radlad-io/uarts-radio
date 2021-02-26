@@ -19,7 +19,7 @@ function Carousel({ content }) {
   
           <style  jsx>{`
             section {
-                margin: 3rem auto 5rem auto;
+                margin: 5rem auto 6rem auto;
             }
           `}</style>
           

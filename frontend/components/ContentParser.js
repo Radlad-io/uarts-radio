@@ -8,17 +8,18 @@ import FeaturedPosts from './FeaturedPosts'
 
 function ContentParser({ content }) {
     
-    if (content.__component === 'content.paragraph'){
+    // TODO: USE A SWITCH
+    if (content.__typename === 'ComponentContentParagraph'){
         return <Markdown key={content.id} content={content} />
-    } else if (content.__component === 'content.video-embed'){
+    } else if (content.__typename === 'ComponentContentVideoEmbed'){
         return <VideoEmbed key={content.id} content={content} />
-    } else if (content.__component === 'content.block-quote'){
+    } else if (content.__typename === 'ComponentContentBlockQuote'){
         return <BlockQuote key={content.id} content={content} />
-    } else if (content.__component === 'content.featured-staff'){
+    } else if (content.__typename === 'ComponentContentFeaturedStaff'){
         return <FeaturedStaff key={content.id} staff={content} />
-    } else if (content.__component === 'content.carousel'){
+    } else if (content.__typename === 'ComponentContentCarousel'){
         return <Carousel key={content.id} content={content} />
-    } else if (content.__component === 'content.featured-posts'){
+    } else if (content.__typename === 'ComponentContentFeaturedPosts'){
         return <FeaturedPosts key={content.id} content={content} />
     }
 

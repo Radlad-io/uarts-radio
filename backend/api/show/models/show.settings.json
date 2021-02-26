@@ -39,8 +39,8 @@
       "via": "editor"
     },
     "episodes": {
-      "collection": "post",
-      "via": "show"
+      "via": "show",
+      "collection": "post"
     },
     "tags": {
       "collection": "tag",

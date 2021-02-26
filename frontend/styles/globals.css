@@ -27,3 +27,7 @@ p {
   margin: 0.1em 0.1em 0.2em 0;
   font-weight: 900;
 } */
+
+a:hover {
+  color: #D22630;
+}
