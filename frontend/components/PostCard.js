@@ -19,6 +19,7 @@ export function PostCard({ post }) {
               width={600}
               height={325}
               priority={true}
+              preload={true}
               objectFit='cover'
             />
           </div>

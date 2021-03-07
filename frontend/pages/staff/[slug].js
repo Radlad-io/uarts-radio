@@ -38,7 +38,9 @@ export default function Post({ staff }) {
             <div className="lg:grid lg:grid-cols-12 lg:gap-8">
               <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
                 <h1>
-  <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base"><Moment format="MMM Do YYYY">{created_at}</Moment></span>
+                  <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">
+                    <Moment format="MMM Do YYYY">{created_at}</Moment>
+                  </span>
                   <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
                     <span className="block text-gray-900 tracking-wide">{name}</span>
                   </span>

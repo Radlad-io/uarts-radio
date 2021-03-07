@@ -12,7 +12,7 @@ function StaffList({ staff }) {
         </>
     } else if (staff.length === 1){
         return (
-        <Link href={`/staff/${staff[0].slug}`}><a>{staff[0].name}</a></Link>
+            <Link href={`/staff/${staff[0].slug}`}><a>{staff[0].name}</a></Link>
         )
     } else if (staff.length === 2){
         return (

@@ -56,6 +56,7 @@ export async function getPreviewPostBySlug(slug) {
                 }
                 authors {
                   name
+                  slug
                   profile_image {
                     url
                   }

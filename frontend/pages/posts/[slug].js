@@ -59,7 +59,7 @@ export default function Post({ post, preview }) {
                   <b>
                     {props.editors.length < 1 ? null : props.editors.length === 1 ? "Editor: " : "Editors: "}
                   </b>
-                  {props.editors.length > 0 ? <StaffList staff={props.editors} /> : ""}
+                    {props.editors.length > 0 ? <StaffList staff={props.editors} /> : ""}
                 </p>
                 <p>
                   <b>
