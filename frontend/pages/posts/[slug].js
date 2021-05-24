@@ -85,15 +85,19 @@ export default function Post({ post, preview }) {
                 </svg>
                 <div className="relative mx-auto w-full rounded-lg lg:max-w-md">
                     <span className="sr-only">Watch our video to learn more</span>
-                    <Image
-                      className='rounded-lg w-full sm:w-64'
-                      src={`${baseUrl}${props.cover_image.url}`}
-                      alt={props.title}
-                      width={800}
-                      height={500}
-                      preload='true'
-                      objectFit='cover'
-                    />
+                    {props.cover_image ? 
+                        <Image
+                        className='rounded-lg w-full sm:w-64'
+                        src={`${baseUrl}${props.cover_image.url}`}
+                        alt={props.title}
+                        width={800}
+                        height={500}
+                        preload='true'
+                        objectFit='cover'
+                      />
+                    : ""
+                    }
+
 
                 </div>
               </div>
@@ -173,6 +177,7 @@ export default function Post({ post, preview }) {
 // Queries Strapi for a post with a matching slug
 export async function getStaticProps( context ) {
   const post = context.preview === true ? await getPreviewPostBySlug(context.params.slug) : await getPostBySlug(context.params.slug)
+  console.log(post)
   if (context.preview === true){
     const preview = context.preview
     return {

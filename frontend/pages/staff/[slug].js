@@ -146,16 +146,6 @@ export default function Post({ staff }) {
 }
 
 
-// Queries Strapi for a post with a matching slug
-// export async function getStaticProps({ params }) {
-//   const staff = await fetchQuery('users', `?slug=${params.slug}`)
-//   return {
-//     props: {
-//       staff
-//     }
-//   }
-// }
-
 export async function getStaticProps( context ) {
   const staff = await getStaffBySlug(context.params.slug)
   if (context.preview === true){
@@ -178,6 +168,7 @@ export async function getStaticProps( context ) {
 // Grabs all the posts in order to make a route for each of them
 export async function getStaticPaths() {
   const staff = await fetchQuery('users')
+  console.log(staff)
   const paths = staff.map((staff) => {
     return {
       params: { slug: String(staff.slug) }

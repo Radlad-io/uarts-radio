@@ -42,7 +42,7 @@ function VideoEmbed({ content }) {
     let source = content.URL.replace("https://vimeo.com/","https://player.vimeo.com/video/")
     return(
       <section className="container mx-auto px-3 xl:px-20">
-      <iframe src={source}  allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <iframe src={source}  allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
       <p className="embed-caption">{content.embed_caption}</p>
 
       <style jsx>{`

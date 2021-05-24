@@ -3,7 +3,7 @@
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import Link from 'next/link'
-import { baseUrl, fetchQuery } from '../utilities/utils'
+import { baseURL, getPosts, getFeaturedStaff, getShows  } from '../lib/api'
 
 import { PostCard } from '../components/PostCard'
 import Footer from '../components/Footer'
@@ -128,7 +128,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                 >
                   <Image 
                     className="w-full shadow-xl ring-1 ring-black ring-opacity-5 lg:h-full lg:w-auto lg:max-w-none" 
-                    src={`${baseUrl}${posts[0].cover_image.url}`}
+                    src={`${baseURL}${posts[0].cover_image.url}`}
                     width={750}
                     height={550}
                     objectFit='cover'
@@ -165,7 +165,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                   {/* Testimonial card  */}
                     <Image
                       className="absolute inset-0 h-full w-full object-cover" 
-                      src={`${baseUrl}${featuredAuthor[0].profile_image.url}`}
+                      src={`${baseURL}${featuredAuthor.profile_image.url}`}
                       width={400}
                       height={650}
                       objectFit='cover'
@@ -181,11 +181,11 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                     Featured Staff                  
                   </h2>
                   <h3 className="text-2xl text-gray-900 tracking-wide sm:text-4xl">
-                    {featuredAuthor[0].name}
+                    {featuredAuthor.name}
                   </h3>
                   <div className="mt-6 text-gray-500 space-y-6">
                     <p className="text-lg">
-                      {featuredAuthor[0].short_biography}
+                      {featuredAuthor.short_biography}
                     </p>
                   </div>
                 </div>
@@ -196,28 +196,29 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                     <div className="border-t-2 mr-4 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">Joined</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
-                      <Moment format="MMM Do YYYY ">{featuredAuthor[0].created_at}</Moment>
+                      <Moment format="MMM Do YYYY ">{featuredAuthor.created_at}</Moment>
                       </dd>
                     </div>
 
                     <div className="border-t-2 mr-4 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">Written</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
-                        {featuredAuthor[0].authored.length} Articles
+                        {/* TODO: Figure out how to add counts in the GraphQL query */}
+                        {/* {featuredAuthor.authored.length} Articles */}
                       </dd>
                     </div>
 
                     <div className="border-t-2 mr-4 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">Edited</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
-                        {featuredAuthor[0].edited.length} Articles
+                        {/* {featuredAuthor.edited.length} Articles */}
                       </dd>
                     </div>
 
                     <div className="border-t-2 mr-4 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">Photography for</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
-                        {featuredAuthor[0].photography.length} Articles
+                        {/* {featuredAuthor.photography.length} Articles */}
                       </dd>
                     </div>
 
@@ -227,7 +228,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                   <div className="border-t-2 mr-4 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">Interests</dt>
                       <dd className="">
-                        {featuredAuthor[0].interests.map((tag) => (
+                        {featuredAuthor.interests.map((tag) => (
                             <Tag tag={tag}/>
                           ))}
                       </dd>
@@ -235,7 +236,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
 
                   <div className="mt-10">
                     <a href="#" className="text-base font-medium text-rose-500">
-                      Learn more about {featuredAuthor[0].name} &rarr;
+                      Learn more about {featuredAuthor.name} &rarr;
                     </a>
                   </div>
                 </div>
@@ -351,9 +352,9 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
 }
 
 export async function getServerSideProps() {
-  const posts = await fetchQuery('posts', '?featured=true&_limit=4')
-  const featuredAuthor = await fetchQuery('users', '?_limit=1')
-  const featuredShows = await fetchQuery('shows', '?_limit=6')
+  const posts = await getPosts(3)
+  const featuredAuthor = await getFeaturedStaff()
+  const featuredShows = await getShows(6)
 
   return {
     props: {

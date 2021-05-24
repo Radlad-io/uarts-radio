@@ -16,7 +16,7 @@ function Tag({ tag }) {
                     margin: 1rem 1rem 0 0;
                     background-color: #D22630;
                     color: white;
-                    padding: .4rem .6rem;
+                    padding: .3rem .6rem .4rem .6rem;
                     text-transform: uppercase;
                     letter-spacing: .1rem;
                     font-weight: 700;

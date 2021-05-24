@@ -19,8 +19,8 @@ export default function Home({ posts, tags, query }) {
       opacity: 1,
       y: 0,
       transition: {
-        staggerChildren: 0.5,
-        type: 'easeIn'
+        staggerChildren: 0.25,
+        type: 'easeInOut'
       }
     }
   }
@@ -34,7 +34,8 @@ export default function Home({ posts, tags, query }) {
       opacity: 1,
       y:0,
       transition: {
-        type: 'easeIn'
+        duration: .75,
+        type: 'easeInOut'
       }
     }
   }

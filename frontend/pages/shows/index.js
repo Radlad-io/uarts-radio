@@ -1,6 +1,6 @@
 // frontend/pages/index.js
 import Layout from '../../components/Layout'
-import { fetchQuery } from '../../utilities/utils'
+import { getShows } from '../../lib/api'
 import { ShowCard } from '../../components/ShowCard'
 
 import Footer from '../../components/Footer'
@@ -23,7 +23,7 @@ export default function Home({ shows }) {
 }
 
 export async function getServerSideProps() {
-  const shows = await fetchQuery('shows')
+  const shows = await getShows()
   return {
     props: {
       shows
