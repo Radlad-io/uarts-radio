@@ -1,19 +1,23 @@
 import { fetchQuery } from '../../utilities/utils'
-import { getPreviewPostById } from '../../lib/api'
+import { previewPostById } from '@lib/api'
 
 
 export default async function preview (req, res) {
 
     // Check the secret and next parameters
     // This secret should only be known to this API route and the CMS
-    if (req.query.secret !== process.env.PREVIEW_SECRET || !req.query.id) {
+    if (req.query.secret !== process.env.PREVIEW_SECRET) {
       return res.status(401).json({ message: 'Invalid token' })
+    }
+
+    if (!req.query.id) {
+      return res.status(401).json({ message: 'No valid ID' })
     }
   
     // Fetch the headless CMS to check if the provided `slug` exists
     // getPostBySlug would implement the required fetching logic to the headless CMS
     // const post = await fetchQuery('posts?_publicationState=preview&_limit=1', `&slug=${req.query.slug}`)
-    const post = await getPreviewPostById(req.query.id)
+    const post = await previewPostById(req.query.id)
   
     // If the slug doesn't exist prevent preview mode from being enabled
     if (!post) {

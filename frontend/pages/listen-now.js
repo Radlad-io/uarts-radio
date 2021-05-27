@@ -1,14 +1,13 @@
-// TODO: Design a home page
 
 // frontend/pages/index.js
-import Layout from '../components/Layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import { baseUrl, fetchQuery } from '../utilities/utils'
 
-import { PostCard } from '../components/PostCard'
-import Footer from '../components/Footer'
-import SectionTitle from '../components/SectionTitle'
+import Layout from '@components/Layout'
+import { PostCard } from '@components/PostCard'
+import Footer from '@components/Footer'
+import SectionTitle from '@components/SectionTitle'
 
 
 

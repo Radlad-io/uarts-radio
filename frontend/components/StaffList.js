@@ -3,7 +3,7 @@ import { baseUrl } from '../utilities/utils'
 
 
 function StaffList({ staff }) {
-    //console.log(staff)
+
     // TODO: USE A SWITCH
     
     if(staff.length === 0){

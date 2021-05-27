@@ -6,7 +6,6 @@ import ContentParser from './ContentParser'
 import Moment from 'react-moment'
 
 export function PostCard({ post }) {
-  // console.log(post)
   return (
     <>
       <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:max-w-none h-full">
@@ -45,17 +44,6 @@ export function PostCard({ post }) {
               <div className="flex-shrink-0">
                 <a href="#">
                   <span className="sr-only">Roel Aufderehar</span>
-
-                  {/* TODO: WTF is up with this components image URL */}
-                  {/* <Image
-                    classNameName='h-48 w-full object-cover'
-                    src={baseUrl + post.authors[0].profile_image.url}
-                    // alt={post.title}
-                    width={50}
-                    height={50}
-                    loading='lazy'
-                    objectFit='cover'
-                  /> */}
                 </a>
               </div>
               <div className="ml-3">

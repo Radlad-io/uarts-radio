@@ -13,6 +13,7 @@ async function fetchAPI(query, { variables } = {}) {
   })
 
   const res = await req.json()
+
   if (res.errors) {
     console.error(res.errors)
     throw new Error('Failed to fetch API')
@@ -21,7 +22,7 @@ async function fetchAPI(query, { variables } = {}) {
   return res.data
 }
 
-export async function getPreviewPostById(id) {
+export async function previewPostById(id) {
   const data = await fetchAPI(
       `
       query {
@@ -37,7 +38,7 @@ export async function getPreviewPostById(id) {
   return data?.posts[0]
 }
 
-export async function getPreviewPostBySlug(slug) {
+export async function previewPostBySlug(slug) {
     const data = await fetchAPI(
         `
         query {

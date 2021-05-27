@@ -1,16 +1,15 @@
 // frontent/pages/movie/[movieId].js
-import Moment from "react-moment";
-
-import Layout from '../../components/Layout'
 import Link from 'next/link'
 import Image from 'next/image'
+import Moment from "react-moment";
 import { getStaffBySlug  } from '../../lib/api'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
-import Navbar from "../../components/Navbar";
-import ContentParser from "../../components/ContentParser";
-import Footer from "../../components/Footer";
-import Socials from "../../components/Socials";
+import Layout from '@components/Layout'
+import Navbar from "@components/Navbar";
+import ContentParser from "@components/ContentParser";
+import Footer from "@components/Footer";
+import Socials from "@components/Socials";
 
 
 export default function Post({ staff }) {
@@ -168,7 +167,6 @@ export async function getStaticProps( context ) {
 // Grabs all the posts in order to make a route for each of them
 export async function getStaticPaths() {
   const staff = await fetchQuery('users')
-  console.log(staff)
   const paths = staff.map((staff) => {
     return {
       params: { slug: String(staff.slug) }

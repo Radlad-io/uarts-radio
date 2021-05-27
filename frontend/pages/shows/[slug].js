@@ -1,17 +1,17 @@
 // frontent/pages/movie/[movieId].js
-import Moment from "react-moment";
-
-import Layout from '../../components/Layout'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getShowBySlug  } from '../../lib/api'
+import Moment from "react-moment";
+import { getShowBySlug  } from '@lib/api'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
-import ContentParser from "../../components/ContentParser";
-import Carousel from "../../components/Carousel";
-import Footer from "../../components/Footer";
-import Hero from "../../components/Hero";
-import Navbar from "../../components/Navbar";
+import Layout from '@components/Layout'
+import ContentParser from "@components/ContentParser";
+//TODO: Should probably remove this
+import Carousel from "@components/Carousel";
+import Footer from "@components/Footer";
+import Hero from "@components/Hero";
+import Navbar from "@components/Navbar";
 
 
 export default function Post({ show }) {
@@ -120,9 +120,7 @@ export default function Post({ show }) {
 // }
 export async function getStaticProps( context ) {
   // TODO: Add support for preview state
-  console.log(context.params.slug)
   const show = await getShowBySlug(context.params.slug)
-  console.log(show)
   if (context.preview === true){
     const preview = context.preview
     return {

@@ -1,18 +1,15 @@
 // frontent/pages/movie/[slug].js
-import Moment from "react-moment";
-
 import Link from 'next/link'
 import Image from 'next/image'
+import Moment from "react-moment";
+import { baseURL, previewPostBySlug, getPostBySlug, getPosts  } from '@lib/api'
 
-import { getPreviewPostBySlug, getPostBySlug  } from '../../lib/api'
-import { baseUrl, fetchQuery } from '../../utilities/utils'
-
-import Layout from '../../components/Layout'
-import ContentParser from "../../components/ContentParser";
-import Footer from "../../components/Footer";
-import PreviewBanner from "../../components/PreviewBanner";
-import StaffList from "../../components/StaffList";
-import Navbar from "../../components/Navbar";
+import Layout from '@components/Layout'
+import ContentParser from "@components/ContentParser";
+import Footer from "@components/Footer";
+import PreviewBanner from "@components/PreviewBanner";
+import StaffList from "@components/StaffList";
+import Navbar from "@components/Navbar";
 
 
 export default function Post({ post, preview }) {
@@ -88,7 +85,7 @@ export default function Post({ post, preview }) {
                     {props.cover_image ? 
                         <Image
                         className='rounded-lg w-full sm:w-64'
-                        src={`${baseUrl}${props.cover_image.url}`}
+                        src={`${baseURL}${props.cover_image.url}`}
                         alt={props.title}
                         width={800}
                         height={500}
@@ -113,7 +110,6 @@ export default function Post({ post, preview }) {
       </div>
 
       <br />
-      {console.log(props.content)}
       {props.content.map((content) => (
           <ContentParser content={content} />
         ))}
@@ -176,8 +172,7 @@ export default function Post({ post, preview }) {
 
 // Queries Strapi for a post with a matching slug
 export async function getStaticProps( context ) {
-  const post = context.preview === true ? await getPreviewPostBySlug(context.params.slug) : await getPostBySlug(context.params.slug)
-  console.log(post)
+  const post = context.preview === true ? await previewPostBySlug(context.params.slug) : await getPostBySlug(context.params.slug)
   if (context.preview === true){
     const preview = context.preview
     return {
@@ -197,7 +192,7 @@ export async function getStaticProps( context ) {
 
 // Grabs all the posts in order to make a route for each of them
 export async function getStaticPaths() {
-  const posts = await fetchQuery('posts')
+  const posts = await getPosts()
   const paths = posts.map((post) => {
     return {
       params: { slug: String(post.slug) }

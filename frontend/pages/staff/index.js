@@ -3,9 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
-import Layout from '../../components/Layout'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
+import Layout from '@components/Layout'
+import Navbar from '@components/Navbar'
+import Footer from '@components/Footer'
 
 export default function Home({ staff }) {
   return (

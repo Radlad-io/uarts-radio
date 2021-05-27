@@ -4,7 +4,6 @@ import { baseUrl } from '../utilities/utils'
 
 // TODO: Replace with Keen Slider
 function Carousel({ content }) {
-    // console.log(content)
     return (
         <>
         <section className="container mx-auto px-3 xl:px-20">

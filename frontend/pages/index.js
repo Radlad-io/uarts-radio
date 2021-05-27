@@ -1,17 +1,18 @@
 
 // frontend/pages/index.js
-import Layout from '../components/Layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import { baseURL, getPosts, getFeaturedStaff, getShows  } from '../lib/api'
-
-import { PostCard } from '../components/PostCard'
-import Footer from '../components/Footer'
-import SectionTitle from '../components/SectionTitle'
-import Navbar from '../components/Navbar'
-import Moment from 'react-moment'
-import Tag from '../components/Tag'
 import { motion, useViewportScroll, useTransform } from "framer-motion"
+
+import Layout from '@components/Layout'
+import { PostCard } from '@components/PostCard'
+import Footer from '@components/Footer'
+import SectionTitle from '@components/SectionTitle'
+import Navbar from '@components/Navbar'
+import Moment from 'react-moment'
+import Tag from '@components/Tag'
+
 
 
 
@@ -46,7 +47,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
   }
 
   const { scrollYProgress } = useViewportScroll();
-  const scale = useTransform(scrollYProgress, [0, 1.2], [0.9, 1.2]);
+  const scale = useTransform(scrollYProgress, [0, 1.2], [0.9, 1.3]);
 
   return (
     <Layout title='UArts Radio' description=''>
@@ -55,7 +56,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
         <main>
           {/*  Hero section  */}
           <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-20">
-            <motion.div 
+            <div 
               className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24"
               variants={container}
               initial="hidden"
@@ -63,7 +64,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
             >
               <div>
                 <div className="mt-20">
-                  <motion.div
+                  <div
                     variants={item}
                   >
                     <a href="#" className="inline-flex space-x-4">
@@ -71,33 +72,33 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                       <Moment format="MMM Do ">{posts[0].published_at}</Moment>
                       </span>
                     </a>
-                  </motion.div>
+                  </div>
                   <div className="mt-6 sm:max-w-xl">
-                    <motion.h1 
+                    <h1 
                       className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl"
                       variants={item}
                     >
                       {posts[0].title}
-                    </motion.h1>
-                    <motion.p
+                    </h1>
+                    <p
                       className="mt-6 text-xl text-gray-500"
                       variants={item}
                     >
                       {posts[0].description}
-                    </motion.p>
-                    <motion.p 
+                    </p>
+                    <p 
                       className="mt-6"
                       variants={item}
                     >
                       <b>Author: </b><span className="text-xl text-gray-500">{posts[0].authors[0].name}</span>
-                    </motion.p>
-                    <motion.div
+                    </p>
+                    <div
                       variants={item}
                     >
                       {posts[0].tags.map((tag) => (
                         <Tag tag={tag}/>
                         ))}
-                    </motion.div>
+                    </div>
                   </div>
                   <div className="mt-6">
                     <div className="inline-flex items-center divide-x divide-gray-300">
@@ -105,7 +106,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             <div className="sm:mx-auto sm:max-w-3xl sm:px-6">
               <div className="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
@@ -120,12 +121,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                     <rect width="404" height="392" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)" />
                   </svg>
                 </div>
-                <motion.div 
-                  className="relative pl-4 -mr-40 sm:mx-auto sm:max-w-3xl sm:px-0 lg:max-w-none lg:h-full lg:pl-12"
-                  initial={{ opacity: 0, x: 750 }}
-                  animate={{ opacity: 1 , x: 0}}
-                  transition={{ type: 'easeIn', duration: 1 }}
-                >
+                <div className="relative pl-4 -mr-40 sm:mx-auto sm:max-w-3xl sm:px-0 lg:max-w-none lg:h-full lg:pl-12">
                   <Image 
                     className="w-full shadow-xl ring-1 ring-black ring-opacity-5 lg:h-full lg:w-auto lg:max-w-none" 
                     src={`${baseURL}${posts[0].cover_image.url}`}
@@ -135,7 +131,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                     priority={true}
                     alt="" 
                     />
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>
@@ -333,15 +329,6 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
           </div>
         </main> 
         </div>
-        
-        <section className="container mx-auto px-3 xl:px-20 mt-20">
-            <SectionTitle title="Some Featured Posts" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 py-10 gap-1 sm:gap-6 lg:gap-10 items-stretch md:grid-cols-2 lg:grid-cols-3">
-              {featuredPosts.map((post) => (
-                <PostCard key={post.title} post={post} />
-              ))}
-            </div>
-          </section>
           
         <Footer />
         <style jsx>{`

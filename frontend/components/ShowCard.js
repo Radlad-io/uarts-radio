@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { baseURL } from '../lib/api'
 
 export function ShowCard({ show }) {
-  console.log(show)
   return (
     <div className="container mx-auto px-3 xl:px-20">
       <Link key={show.title} href={`/shows/${show.slug}`}>

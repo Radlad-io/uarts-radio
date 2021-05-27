@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 function Socials({ social }) {
-    console.log(social)
     if (social.platform === 'Instagram'){
         return (
             <>

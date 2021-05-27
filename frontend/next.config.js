@@ -2,6 +2,7 @@
 
 module.exports = {
     images: {
+      // Content API 
       domains: ['localhost'],
     },
   }
