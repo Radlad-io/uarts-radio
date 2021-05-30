@@ -153,13 +153,15 @@ export async function getStaticProps( context ) {
       props: {
         staff,
         preview
-      }
+      },
+      revalidate: 30
     }
   } else {
     return {
       props: {
         staff
-      }
+      },
+      revalidate: 30
     }
   }
 }

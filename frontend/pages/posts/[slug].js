@@ -114,12 +114,6 @@ export default function Post({ post, preview }) {
           <ContentParser content={content} />
         ))}
       <br />
-      <div className="container mx-auto px-3 xl:px-20">
-
-
-      </div>
-      <br />
-
       <Footer />
       
       <style jsx>{`
@@ -179,13 +173,15 @@ export async function getStaticProps( context ) {
       props: {
         post,
         preview
-      }
+      },
+      revalidate: 30
     }
   } else {
     return {
       props: {
         post
-      }
+      },
+      revalidate: 30
     }
   }
 }

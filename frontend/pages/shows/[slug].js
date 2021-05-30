@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Moment from "react-moment";
-import { getShowBySlug  } from '@lib/api'
+import { getShows, getShowBySlug  } from '@lib/api'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
 import Layout from '@components/Layout'
@@ -109,38 +109,33 @@ export default function Post({ show }) {
 }
 
 
-// Queries Strapi for a post with a matching slug
-// export async function getStaticProps({ params }) {
-//   const shows = await fetchQuery('shows', `?slug=${params.slug}`)
-//   return {
-//     props: {
-//       shows
-//     }
-//   }
-// }
+
 export async function getStaticProps( context ) {
   // TODO: Add support for preview state
   const show = await getShowBySlug(context.params.slug)
+
   if (context.preview === true){
     const preview = context.preview
     return {
       props: {
         post,
         preview
-      }
+      },
+      revalidate: 30
     }
   } else {
     return {
       props: {
         show
-      }
+      },
+      revalidate: 30
     }
   }
 }
 
 // Grabs all the posts in order to make a route for each of them
 export async function getStaticPaths() {
-  const shows = await fetchQuery('shows')
+  const shows = await getShows()
   const paths = shows.map((show) => {
     return {
       params: { slug: String(show.slug) }

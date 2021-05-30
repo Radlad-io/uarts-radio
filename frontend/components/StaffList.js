@@ -3,7 +3,6 @@ import { baseUrl } from '../utilities/utils'
 
 
 function StaffList({ staff }) {
-
     // TODO: USE A SWITCH
     
     if(staff.length === 0){
@@ -16,7 +15,7 @@ function StaffList({ staff }) {
         )
     } else if (staff.length === 2){
         return (
-            <>  
+            <>
                 <Link href={`/staff/${staff[0].slug}`}><a>{staff[0].name}</a></Link>
                 <span> & </span>
                 <Link href={`/staff/${staff[1].slug}`}><a>{staff[1].name}</a></Link>

@@ -69,6 +69,7 @@ function Navbar() {
     
             .listen-now:hover {
             background-color: #DB5159;
+            color: white;
             }
     
             .active {

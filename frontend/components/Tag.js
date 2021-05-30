@@ -6,7 +6,7 @@ function Tag({ tag }) {
     const router = useRouter()
     return (
         <>
-            <Link href={`/explore?tags.slug=${tag.slug}`}><a className={router.pathname == `/explore?tags.slug=${tag.slug}` ? "active" : "tag"}>{tag.tag}</a></Link>
+            <Link key={tag.id} href={`/explore?tags.slug=${tag.slug}`}><a className={router.pathname == `/explore?tags.slug=${tag.slug}` ? "active" : "tag"}>{tag.tag}</a></Link>
 
             <style jsx>{`
 
@@ -26,6 +26,10 @@ function Tag({ tag }) {
                     cursor:pointer;
                     color: white;
                     background-color: #DB5159;
+                }
+
+                .tag:active {
+                    background-color: black;
                 }
 
           `}</style>

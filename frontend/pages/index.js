@@ -2,7 +2,7 @@
 // frontend/pages/index.js
 import Image from 'next/image'
 import Link from 'next/link'
-import { baseURL, getPosts, getFeaturedStaff, getShows  } from '../lib/api'
+import { baseURL, getPosts, getStaff, getShows  } from '../lib/api'
 import { motion, useViewportScroll, useTransform } from "framer-motion"
 
 import Layout from '@components/Layout'
@@ -11,6 +11,7 @@ import Footer from '@components/Footer'
 import SectionTitle from '@components/SectionTitle'
 import Navbar from '@components/Navbar'
 import Moment from 'react-moment'
+import StaffList from '@components/StaffList'
 import Tag from '@components/Tag'
 
 
@@ -90,7 +91,8 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                       className="mt-6"
                       variants={item}
                     >
-                      <b>Author: </b><span className="text-xl text-gray-500">{posts[0].authors[0].name}</span>
+                      <b>{posts[0].authors.length < 1 ? null : posts[0].authors.length === 1 ? "Author: " : "Authors: "} </b>
+                      <span className="text-xl text-gray-500">{posts[0].authors.length > 0 ? <StaffList staff={posts[0].authors} /> : ""}</span>
                     </p>
                     <div
                       variants={item}
@@ -165,6 +167,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                       width={400}
                       height={650}
                       objectFit='cover'
+                      priority={true}
                       alt="" 
                     />
                 </motion.div>
@@ -331,16 +334,14 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
         </div>
           
         <Footer />
-        <style jsx>{`
-
-        `}</style>
     </Layout>
   )
 }
 
-export async function getServerSideProps() {
-  const posts = await getPosts(3)
-  const featuredAuthor = await getFeaturedStaff()
+export async function getStaticProps() {
+  const posts = await getPosts(1)
+  const author = await getStaff(1)
+  const featuredAuthor = author[0]
   const featuredShows = await getShows(6)
 
   return {

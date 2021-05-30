@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "streams",
+  "info": {
+    "name": "stream"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "key": {
+      "type": "string"
+    }
+  }
+}

@@ -5,7 +5,12 @@ import { baseUrl } from '../utilities/utils'
 import ContentParser from './ContentParser'
 import Moment from 'react-moment'
 
-export function PostCard({ post }) {
+function PostCard( props ) {
+
+  const { slug, image, type, title, description, date } = props;
+
+  console.log(slug)
+
   return (
     <>
       <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:max-w-none h-full">
@@ -13,8 +18,8 @@ export function PostCard({ post }) {
           <div className="flex-shrink-0">
             <Image
               classNameName='h-48 w-full object-cover'
-              src={baseUrl + post.cover_image.url}
-              alt={post.title}
+              src={baseUrl + image}
+              alt={title}
               width={600}
               height={325}
               priority={true}
@@ -26,16 +31,16 @@ export function PostCard({ post }) {
             <div className="flex-1">
               <p className="postType text-sm font-medium">
                 <a href="#" className="hover:underline">
-                  {post.type}
+                  {type}
                 </a>
               </p>
-              <Link href={`/posts/${post.slug}`}>
+              <Link href={slug}>
                 <a className="block mt-2">
                   <p className="text-xl font-semibold text-gray-900">
-                    {post.title}
+                    {title}
                   </p>
                   <p className="mt-3 text-base text-gray-500">
-                    {post.description}
+                    {description}
                   </p>
                 </a>
               </Link>
@@ -54,7 +59,7 @@ export function PostCard({ post }) {
                 </p>
                 <div className="flex space-x-1 text-sm text-gray-500">
                   <time datetime="2020-03-16">
-                    <Moment format="MMM Do YYYY">{post.published_at}</Moment>
+                    <Moment format="MMM Do YYYY">{date}</Moment>
                   </time>
                 </div>
               </div>
@@ -70,3 +75,5 @@ export function PostCard({ post }) {
       </>
   )
 }
+
+export default PostCard

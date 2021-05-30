@@ -159,18 +159,21 @@ export async function getPostBySlug(slug) {
               }
               authors {
                 name
+                slug
                 profile_image {
                   url
                 }
               }
               editors {
                 name
+                slug
                 profile_image {
                   url
                 }
               }
               photographers {
                 name
+                slug
                 profile_image {
                   url
                 }
@@ -241,11 +244,11 @@ export async function getPostBySlug(slug) {
   return data?.posts[0]
 }
 
-export async function getPosts(limit) {
+export async function getPosts(limit, order) {
   const data = await fetchAPI(
       `
       query {
-          posts( publicationState: LIVE ${limit ? ", limit: "+limit : ""} ) {
+          posts( publicationState: LIVE ${limit ? ", limit: "+limit : ""} ${order ? ', sort: "'+ limit +'"' : ''} ) {
               title
               slug
               description
@@ -260,18 +263,21 @@ export async function getPosts(limit) {
               }
               authors {
                 name
+                slug
                 profile_image {
                   url
                 }
               }
               editors {
                 name
+                slug
                 profile_image {
                   url
                 }
               }
               photographers {
                 name
+                slug
                 profile_image {
                   url
                 }
@@ -569,12 +575,14 @@ export async function getStaffBySlug(slug) {
   return data?.users[0]
 }
 
-export async function getFeaturedStaff(limit) {
+export async function getStaff(limit) {
   const data = await fetchAPI(
       `
       query {
         users( publicationState: LIVE ${limit ? ", limit: "+limit : ""} ) {
             name
+            slug
+            short_biography
             interests{
               tag
               slug
@@ -625,6 +633,6 @@ export async function getFeaturedStaff(limit) {
 
       `
   )
-  return data?.users[0]
+  return data?.users
 }
   

@@ -5,12 +5,12 @@ import { useRouter } from 'next/router'
 import { fetchQuery } from '../utilities/utils'
 
 import Layout from '@components/Layout'
-import { PostCard } from '@components/PostCard'
 import Tag from '@components/Tag'
 import Footer from '@components/Footer'
 import Navbar from '@components/Navbar'
 import PostList from '@components/PostList'
 import Loarder from '@components/Loader'
+
 
 export default function Home({ tags }) {
 
@@ -21,7 +21,8 @@ export default function Home({ tags }) {
       <section className='container mx-auto px-3 xl:px-20'>
 
       <div className="flex-1 flex mt-20">
-        </div>
+        
+      </div>
         {tags.map((tag) => (
             <Tag tag={tag}/>
         ))}
