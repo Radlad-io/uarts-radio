@@ -129,7 +129,8 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                     src={`${baseURL}${posts[0].cover_image.url}`}
                     width={750}
                     height={550}
-                    objectFit='cover'
+                    layout={'responsive'}
+                    // objectFit={'cover'}
                     priority={true}
                     alt="" 
                     />
@@ -167,7 +168,6 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                       width={400}
                       height={650}
                       objectFit='cover'
-                      priority={true}
                       alt="" 
                     />
                 </motion.div>
@@ -349,6 +349,7 @@ export async function getStaticProps() {
       posts,
       featuredAuthor,
       featuredShows
-    }
+    },
+    revalidate: 60
   }
 }

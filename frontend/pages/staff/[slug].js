@@ -1,9 +1,8 @@
-// frontent/pages/movie/[movieId].js
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 import Moment from "react-moment";
-import { getStaffBySlug  } from '../../lib/api'
-import { baseUrl, fetchQuery } from '../../utilities/utils'
+import { baseURL, getStaff, getStaffBySlug  } from '@lib/api'
 
 import Layout from '@components/Layout'
 import Navbar from "@components/Navbar";
@@ -12,7 +11,13 @@ import Footer from "@components/Footer";
 import Socials from "@components/Socials";
 
 
-export default function Post({ staff }) {
+export default function Staff({ staff }) {
+
+  const router = useRouter()
+  
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
 
   const {name, created_at, socials, interests, profile_image, content } = staff;
 
@@ -71,7 +76,7 @@ export default function Post({ staff }) {
                     <span className="sr-only">Watch our video to learn more</span>
                     <Image
                       className='rounded-lg w-full sm:w-64'
-                      src={`${baseUrl}${profile_image.url}`}
+                      src={`${baseURL}${profile_image.url}`}
                       alt={name}
                       width={800}
                       height={800}
@@ -166,16 +171,16 @@ export async function getStaticProps( context ) {
   }
 }
 
-// Grabs all the posts in order to make a route for each of them
+
 export async function getStaticPaths() {
-  const staff = await fetchQuery('users')
-  const paths = staff.map((staff) => {
-    return {
-      params: { slug: String(staff.slug) }
-    }
+  const staff = await getStaff()
+
+  const paths = staff.map((user) => {
+    return { params: { slug: user.slug } }
   })
+  
   return {
-    paths,
-    fallback: false
+    paths: paths,
+    fallback: true
   }
 }

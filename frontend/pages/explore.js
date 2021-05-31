@@ -65,7 +65,7 @@ export async function getServerSideProps({query}) {
   return {
     props: {
       tags
-    }
+    },
   }
 }
 

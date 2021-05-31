@@ -1,20 +1,24 @@
-// frontent/pages/movie/[movieId].js
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 import Moment from "react-moment";
 import { getShows, getShowBySlug  } from '@lib/api'
-import { baseUrl, fetchQuery } from '../../utilities/utils'
 
 import Layout from '@components/Layout'
 import ContentParser from "@components/ContentParser";
-//TODO: Should probably remove this
-import Carousel from "@components/Carousel";
 import Footer from "@components/Footer";
 import Hero from "@components/Hero";
 import Navbar from "@components/Navbar";
 
 
-export default function Post({ show }) {
+export default function Show({ show }) {
+
+  const router = useRouter()
+  
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   const { title, tags, content } = show;
 
   return (
@@ -136,13 +140,13 @@ export async function getStaticProps( context ) {
 // Grabs all the posts in order to make a route for each of them
 export async function getStaticPaths() {
   const shows = await getShows()
+
   const paths = shows.map((show) => {
-    return {
-      params: { slug: String(show.slug) }
-    }
+    return { params: { slug: show.slug } }
   })
+  
   return {
-    paths,
-    fallback: false
+    paths: paths,
+    fallback: true
   }
 }

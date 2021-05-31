@@ -1,4 +1,5 @@
 // frontent/pages/movie/[slug].js
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 import Moment from "react-moment";
@@ -14,6 +15,13 @@ import Navbar from "@components/Navbar";
 
 export default function Post({ post, preview }) {
 
+  const router = useRouter()
+  
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
+  //TODO: Destructure incoming post data
   const props = post;
 
   return (
@@ -174,28 +182,29 @@ export async function getStaticProps( context ) {
         post,
         preview
       },
-      revalidate: 30
+      revalidate: 10
     }
   } else {
     return {
       props: {
         post
       },
-      revalidate: 30
+      revalidate: 10
     }
   }
 }
 
+//TODO: You need to mirro this getStaticPaths method to Shows and Staff
 // Grabs all the posts in order to make a route for each of them
 export async function getStaticPaths() {
   const posts = await getPosts()
+
   const paths = posts.map((post) => {
-    return {
-      params: { slug: String(post.slug) }
-    }
+    return { params: { slug: post.slug } }
   })
+
   return {
-    paths,
-    fallback: false
+    paths: paths,
+    fallback: true
   }
 }

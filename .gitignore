@@ -113,7 +113,7 @@ exports
 *.cache
 build
 .strapi-updater.json
-
+/backend/client_secret.json
 
 ############################
 # Next Dependencies
