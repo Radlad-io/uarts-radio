@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { baseUrl } from '../utilities/utils'
+import { baseUrl } from '../../utilities/utils'
 
 function FeaturedStaff({ staff }) {
     return (

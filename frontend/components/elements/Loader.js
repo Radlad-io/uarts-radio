@@ -21,7 +21,7 @@ function Loader() {
         @keyframes c5 {to{clip-path: inset(0 -1ch 0 0)}}
 
     `}
-  </style>
+    </style>
   </>
   )
 }

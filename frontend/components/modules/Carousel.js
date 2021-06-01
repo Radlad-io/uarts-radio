@@ -1,6 +1,6 @@
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-import { baseUrl } from '../utilities/utils'
+import { baseUrl } from '../../utilities/utils'
 
 // TODO: Replace with Keen Slider
 function Carousel({ content }) {

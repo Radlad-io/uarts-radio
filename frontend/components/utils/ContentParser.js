@@ -1,10 +1,10 @@
 
-import Markdown from './Markdown'
-import VideoEmbed from './VideoEmbed'
-import BlockQuote from './BlockQuote'
-import FeaturedStaff from './FeaturedStaff'
-import Carousel from './Carousel'
-import FeaturedPosts from './FeaturedPosts'
+import Markdown from '../modules/Markdown'
+import VideoEmbed from '../modules/VideoEmbed'
+import BlockQuote from '../modules/BlockQuote'
+import FeaturedStaff from '../modules/FeaturedStaff'
+import Carousel from '../modules/Carousel'
+import FeaturedPosts from '../modules/FeaturedPosts'
 
 function ContentParser({ content }) {
     

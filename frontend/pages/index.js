@@ -5,14 +5,14 @@ import Link from 'next/link'
 import { baseURL, getPosts, getStaff, getShows  } from '../lib/api'
 import { motion, useViewportScroll, useTransform } from "framer-motion"
 
-import Layout from '@components/Layout'
-import { PostCard } from '@components/PostCard'
-import Footer from '@components/Footer'
-import SectionTitle from '@components/SectionTitle'
-import Navbar from '@components/Navbar'
+import Layout from '@components/layouts/Layout'
+import { PostCard } from '@components/modules/Card'
+import Footer from '@components/modules/Footer'
+import SectionTitle from '@components/elements/SectionTitle'
+import Navbar from '@components/modules/Navbar'
 import Moment from 'react-moment'
-import StaffList from '@components/StaffList'
-import Tag from '@components/Tag'
+import StaffList from '@components/elements/StaffList'
+import Tag from '@components/elements/Tag'
 
 
 

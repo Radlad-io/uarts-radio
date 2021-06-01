@@ -1,8 +1,8 @@
-// frontend/components/MoiesCard.js
+
 import Link from 'next/link'
 import Image from 'next/image'
-import { baseUrl } from '../utilities/utils'
-import ContentParser from './ContentParser'
+import { baseURL } from '@lib/api'
+import ContentParser from '../utils/ContentParser'
 import Moment from 'react-moment'
 
 function PostCard( props ) {
@@ -18,7 +18,7 @@ function PostCard( props ) {
           <div className="flex-shrink-0">
             <Image
               classNameName='h-48 w-full object-cover'
-              src={baseUrl + image}
+              src={baseURL + image}
               alt={title}
               width={600}
               height={325}

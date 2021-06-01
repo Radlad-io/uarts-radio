@@ -1,5 +1,5 @@
 
-import { baseUrl, fetchQuery } from '../utilities/utils'
+import { baseUrl, fetchQuery } from '../../utilities/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 

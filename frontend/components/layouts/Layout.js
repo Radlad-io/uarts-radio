@@ -1,8 +1,8 @@
 // frontend/components/Layout.js
 import { useState } from 'react'
 import Head from 'next/head'
-import Meta from './meta'
-import StreamingModal from '@components/StreamingModal'
+import Meta from '../utils/meta'
+import StreamingModal from '@components/layouts/StreamingModal'
 
 export default function Layout({ preview, children, title, description }) {
 

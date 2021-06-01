@@ -4,10 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { baseUrl, fetchQuery } from '../utilities/utils'
 
-import Layout from '@components/Layout'
-import { PostCard } from '@components/PostCard'
-import Footer from '@components/Footer'
-import SectionTitle from '@components/SectionTitle'
+import Layout from '@components/layouts/Layout'
+import { PostCard } from '@components/modules/Card'
+import Footer from '@components/modules/Footer'
+import SectionTitle from '@components/elements/SectionTitle'
 
 
 

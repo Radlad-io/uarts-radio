@@ -5,12 +5,12 @@ import Image from 'next/image'
 import Moment from "react-moment";
 import { baseURL, previewPostBySlug, getPostBySlug, getPosts  } from '@lib/api'
 
-import Layout from '@components/Layout'
-import ContentParser from "@components/ContentParser";
-import Footer from "@components/Footer";
-import PreviewBanner from "@components/PreviewBanner";
-import StaffList from "@components/StaffList";
-import Navbar from "@components/Navbar";
+import Layout from '@components/layouts/Layout'
+import ContentParser from "@components/utils/ContentParser";
+import Footer from "@components/modules/Footer";
+import PreviewBanner from "@components/elements/Banner";
+import StaffList from "@components/elements/StaffList";
+import Navbar from "@components/modules/Navbar";
 
 
 export default function Post({ post, preview }) {

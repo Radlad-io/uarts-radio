@@ -4,12 +4,12 @@
 import Link from "next/link";
 import { baseUrl, fetchQuery } from "../utilities/utils";
 
-import Layout from "@components/Layout";
-import Navbar from "@components/Navbar";
+import Layout from "@components/layouts/Layout";
+import Navbar from "@components/modules/Navbar";
 
-import { PostCard } from "@components/PostCard";
-import Footer from "@components/Footer";
-import SectionTitle from "@components/SectionTitle";
+import { PostCard } from "@components/modules/Card";
+import Footer from "@components/modules/Footer";
+import SectionTitle from "@components/elements/SectionTitle";
 import styled from 'styled-components'
 
 const HeadingStyle = styled.h1`

@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { fetchQuery } from '../utilities/utils'
 
-import Layout from '@components/Layout'
-import Tag from '@components/Tag'
-import Footer from '@components/Footer'
-import Navbar from '@components/Navbar'
-import PostList from '@components/PostList'
-import Loarder from '@components/Loader'
+import Layout from '@components/layouts/Layout'
+import Tag from '@components/elements/Tag'
+import Footer from '@components/modules/Footer'
+import Navbar from '@components/modules/Navbar'
+import PostList from '@components/layouts/PostList'
+import Loarder from '@components/elements/Loader'
 
 
 export default function Home({ tags }) {
@@ -27,6 +27,7 @@ export default function Home({ tags }) {
             <Tag tag={tag}/>
         ))}
         <Loarder />
+        
         <PostList />
 
       </section>

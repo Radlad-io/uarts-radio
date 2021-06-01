@@ -4,11 +4,12 @@ import Image from 'next/image'
 import Moment from "react-moment";
 import { baseURL, getStaff, getStaffBySlug  } from '@lib/api'
 
-import Layout from '@components/Layout'
-import Navbar from "@components/Navbar";
-import ContentParser from "@components/ContentParser";
-import Footer from "@components/Footer";
-import Socials from "@components/Socials";
+import Layout from '@components/layouts/Layout'
+import Navbar from "@components/modules/Navbar";
+import ContentParser from "@components/utils/ContentParser";
+import Footer from "@components/modules/Footer";
+import Socials from "@components/elements/Socials";
+import PostList from '@components/layouts/PostList';
 
 
 export default function Staff({ staff }) {
@@ -22,7 +23,7 @@ export default function Staff({ staff }) {
   const {name, created_at, socials, interests, profile_image, content } = staff;
 
   return (
-    <Layout title={`Staff | ${name}`}>
+    <Layout title={`${name}`}>
       <Navbar />
       <section className="container mx-auto px-3 xl:px-20">
       <div className="relative bg-white overflow-hidden">
@@ -98,7 +99,7 @@ export default function Staff({ staff }) {
       {content.map((content) => (
           <ContentParser content={content} />
         ))}
-        
+
         <Footer />
       
       <style jsx>{`

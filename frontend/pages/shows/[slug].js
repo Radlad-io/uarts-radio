@@ -4,11 +4,11 @@ import Image from 'next/image'
 import Moment from "react-moment";
 import { getShows, getShowBySlug  } from '@lib/api'
 
-import Layout from '@components/Layout'
-import ContentParser from "@components/ContentParser";
-import Footer from "@components/Footer";
-import Hero from "@components/Hero";
-import Navbar from "@components/Navbar";
+import Layout from '@components/layouts/Layout'
+import ContentParser from "@components/utils/ContentParser";
+import Footer from "@components/modules/Footer";
+import Hero from "@components/modules/Hero";
+import Navbar from "@components/modules/Navbar";
 
 
 export default function Show({ show }) {

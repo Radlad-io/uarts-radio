@@ -1,10 +1,10 @@
 // frontend/pages/index.js
 import { getShows } from '@lib/api'
 
-import Layout from '@components/Layout'
-import Footer from '@components/Footer'
-import Navbar from '@components/Navbar'
-import PostCard from '@components/PostCard'
+import Layout from '@components/layouts/Layout'
+import Footer from '@components/modules/Footer'
+import Navbar from '@components/modules/Navbar'
+import PostCard from '@components/modules/Card'
 
 export default function Home({ shows }) {
   return (

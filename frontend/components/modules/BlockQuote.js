@@ -1,4 +1,4 @@
-import { baseUrl } from '../utilities/utils'
+import { baseUrl } from '../../utilities/utils'
 import Image from 'next/image'
 
 function BlockQuote({ content }) {

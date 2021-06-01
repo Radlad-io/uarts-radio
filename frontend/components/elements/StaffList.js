@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { baseUrl } from '../utilities/utils'
+import { baseUrl } from '../../utilities/utils'
 
 
 function StaffList({ staff }) {

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import { baseURL } from '@lib/api'
 import { motion } from 'framer-motion'
-import PostCard from '@components/PostCard'
+import PostCard from '@components/modules/Card'
 
 
 

@@ -3,6 +3,6 @@
 module.exports = {
     images: {
       // Content API 
-      domains: ['localhost'],
+      domains: ['uarts-radio.kevinmerinsky.com'],
     },
   }

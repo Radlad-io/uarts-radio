@@ -1,6 +1,6 @@
 
-import { baseUrl } from '../utilities/utils'
-import PostCard from '@components/PostCard'
+import { baseUrl } from '../../utilities/utils'
+import PostCard from '@components/modules/Card'
 
 function FeaturedPosts({ content }) {
 

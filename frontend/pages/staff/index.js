@@ -4,10 +4,10 @@ import Image from 'next/image'
 import { getStaff } from '@lib/api'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
-import Layout from '@components/Layout'
-import Navbar from '@components/Navbar'
-import Footer from '@components/Footer'
-import PostCard from '@components/PostCard'
+import Layout from '@components/layouts/Layout'
+import Navbar from '@components/modules/Navbar'
+import Footer from '@components/modules/Footer'
+import PostCard from '@components/modules/Card'
 
 
 export default function Home({ staff }) {
