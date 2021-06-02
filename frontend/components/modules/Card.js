@@ -9,21 +9,21 @@ function PostCard( props ) {
 
   const { slug, image, type, title, description, date } = props;
 
-  console.log(slug)
-
   return (
     <>
       <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:max-w-none h-full">
         <div className="flex flex-col shadow-lg overflow-hidden">
           <div className="flex-shrink-0">
             <Image
+              key={image}
               classNameName='h-48 w-full object-cover'
               src={baseURL + image}
               alt={title}
               width={600}
-              height={325}
+              height={375}
+              //TODO: figue out responsive images
+              // layout="responsive"
               priority={true}
-              preload={true}
               objectFit='cover'
             />
           </div>

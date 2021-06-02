@@ -7,10 +7,8 @@ import { baseURL, previewPostBySlug, getPostBySlug, getPosts  } from '@lib/api'
 
 import Layout from '@components/layouts/Layout'
 import ContentParser from "@components/utils/ContentParser";
-import Footer from "@components/modules/Footer";
 import PreviewBanner from "@components/elements/Banner";
 import StaffList from "@components/elements/StaffList";
-import Navbar from "@components/modules/Navbar";
 
 
 export default function Post({ post, preview }) {
@@ -27,7 +25,6 @@ export default function Post({ post, preview }) {
   return (
     <Layout title={props.title}>
       { preview === true && props.published_at === null ? <PreviewBanner /> : ""}
-      <Navbar />
       <div className="container mx-auto px-3 xl:px-20">
       <div className="relative bg-white overflow-hidden">
         <div className="hidden lg:block lg:absolute lg:inset-0" aria-hidden="true">
@@ -122,7 +119,6 @@ export default function Post({ post, preview }) {
           <ContentParser content={content} />
         ))}
       <br />
-      <Footer />
       
       <style jsx>{`
         h1 {

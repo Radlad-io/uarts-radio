@@ -5,10 +5,8 @@ import Link from "next/link";
 import { baseUrl, fetchQuery } from "../utilities/utils";
 
 import Layout from "@components/layouts/Layout";
-import Navbar from "@components/modules/Navbar";
 
 import { PostCard } from "@components/modules/Card";
-import Footer from "@components/modules/Footer";
 import SectionTitle from "@components/elements/SectionTitle";
 import styled from 'styled-components'
 
@@ -21,7 +19,6 @@ const HeadingStyle = styled.h1`
 export default function About({ posts }) {
   return (
     <Layout title="UArts Radio" description="">
-      <Navbar></Navbar>
 
       <div className="container mx-auto px-3 xl:px-20">
       <HeadingStyle>
@@ -68,8 +65,6 @@ export default function About({ posts }) {
           <br />
         </p>
       </div>
-
-      <Footer />
       <style jsx>{``}</style>
     </Layout>
   );

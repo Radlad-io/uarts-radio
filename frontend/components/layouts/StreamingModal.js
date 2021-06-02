@@ -59,7 +59,7 @@ const ModalMotionVariants = {
     },
   },
   closed: {
-      x: "-150vw",
+      x: "-100vw",
       transition: {
         duration: .6,
         type: 'easeIn'

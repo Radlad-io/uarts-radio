@@ -6,9 +6,7 @@ import { getShows, getShowBySlug  } from '@lib/api'
 
 import Layout from '@components/layouts/Layout'
 import ContentParser from "@components/utils/ContentParser";
-import Footer from "@components/modules/Footer";
 import Hero from "@components/modules/Hero";
-import Navbar from "@components/modules/Navbar";
 
 
 export default function Show({ show }) {
@@ -23,7 +21,6 @@ export default function Show({ show }) {
 
   return (
     <Layout title={title}>
-      <Navbar />
       <div className="container mx-auto px-3 xl:px-20">
       
       <section className='flex flex-col md:flex-row md:space-x-6 py-10'>
@@ -57,7 +54,6 @@ export default function Show({ show }) {
 
       <br />
 
-      <Footer />
       
       <style jsx>{`
         h1 {

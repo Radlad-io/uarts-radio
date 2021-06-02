@@ -7,9 +7,7 @@ import { motion, useViewportScroll, useTransform } from "framer-motion"
 
 import Layout from '@components/layouts/Layout'
 import { PostCard } from '@components/modules/Card'
-import Footer from '@components/modules/Footer'
 import SectionTitle from '@components/elements/SectionTitle'
-import Navbar from '@components/modules/Navbar'
 import Moment from 'react-moment'
 import StaffList from '@components/elements/StaffList'
 import Tag from '@components/elements/Tag'
@@ -17,9 +15,7 @@ import Tag from '@components/elements/Tag'
 
 
 
-export default function Home({ posts, featuredAuthor, featuredShows }) {
-
-  const featuredPosts = posts.slice(1)
+export default function Home({ post, featuredAuthor, featuredShows }) {
 
   const container ={
     hidden: { opacity: 0, y:70 },
@@ -51,8 +47,7 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
   const scale = useTransform(scrollYProgress, [0, 1.2], [0.9, 1.3]);
 
   return (
-    <Layout title='UArts Radio' description=''>
-      <Navbar />
+    <Layout title='Home' description=''>
       <div className="bg-white">
         <main>
           {/*  Hero section  */}
@@ -65,39 +60,41 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
             >
               <div>
                 <div className="mt-20">
-                  <div
-                    variants={item}
-                  >
+                  <div>
                     <a href="#" className="inline-flex space-x-4">
                       <span className="rounded bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-500 tracking-wide uppercase">
-                      <Moment format="MMM Do ">{posts[0].published_at}</Moment>
+                      <Moment format="MMM Do ">{post.published_at}</Moment>
                       </span>
                     </a>
                   </div>
                   <div className="mt-6 sm:max-w-xl">
-                    <h1 
-                      className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl"
-                      variants={item}
-                    >
-                      {posts[0].title}
+                    <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
+                      {post.title}
                     </h1>
-                    <p
-                      className="mt-6 text-xl text-gray-500"
-                      variants={item}
-                    >
-                      {posts[0].description}
+                    <p className="mt-6 text-xl text-gray-500">
+                      {post.description}
                     </p>
-                    <p 
-                      className="mt-6"
-                      variants={item}
-                    >
-                      <b>{posts[0].authors.length < 1 ? null : posts[0].authors.length === 1 ? "Author: " : "Authors: "} </b>
-                      <span className="text-xl text-gray-500">{posts[0].authors.length > 0 ? <StaffList staff={posts[0].authors} /> : ""}</span>
+                    <p className="mt-6">
+                    <p>
+                  <b>
+                  {post.authors.length < 1 ? null : post.authors.length === 1 ? "Author: " : "Authors: "}
+                  </b>
+                  {post.authors.length > 0 ? <StaffList staff={post.authors} /> : ""} </p>
+                <p>
+                  <b>
+                    {post.editors.length < 1 ? null : post.editors.length === 1 ? "Editor: " : "Editors: "}
+                  </b>
+                    {post.editors.length > 0 ? <StaffList staff={post.editors} /> : ""}
+                </p>
+                <p>
+                  <b>
+                    {post.photographers.length < 1 ? null : post.photographers.length === 1 ? "Photographer: " : "Photographers: "}
+                  </b>
+                    {post.photographers.length > 0 ? <StaffList staff={post.photographers} /> : ""}
+                </p>
                     </p>
-                    <div
-                      variants={item}
-                    >
-                      {posts[0].tags.map((tag) => (
+                    <div>
+                      {post.tags.map((tag) => (
                         <Tag tag={tag}/>
                         ))}
                     </div>
@@ -126,10 +123,10 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
                 <div className="relative pl-4 -mr-40 sm:mx-auto sm:max-w-3xl sm:px-0 lg:max-w-none lg:h-full lg:pl-12">
                   <Image 
                     className="w-full shadow-xl ring-1 ring-black ring-opacity-5 lg:h-full lg:w-auto lg:max-w-none" 
-                    src={`${baseURL}${posts[0].cover_image.url}`}
+                    src={`${baseURL}${post.cover_image.url}`}
                     width={750}
                     height={550}
-                    layout={'responsive'}
+                    // layout={'responsive'}
                     // objectFit={'cover'}
                     priority={true}
                     alt="" 
@@ -333,20 +330,19 @@ export default function Home({ posts, featuredAuthor, featuredShows }) {
         </main> 
         </div>
           
-        <Footer />
     </Layout>
   )
 }
 
 export async function getStaticProps() {
-  const posts = await getPosts(1)
+  const post = await getPosts(1)
   const author = await getStaff(1)
   const featuredAuthor = author[0]
   const featuredShows = await getShows(6)
 
   return {
     props: {
-      posts,
+      post,
       featuredAuthor,
       featuredShows
     },

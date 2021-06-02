@@ -345,6 +345,10 @@ export async function getPosts(limit, order) {
 
       `
   )
+  if(limit === 1) {
+    return data?.posts[0]
+  }
+  
   return data?.posts
 }
 
@@ -532,6 +536,39 @@ export async function getStaffBySlug(slug) {
             }
             profile_image{
               url
+            }
+            authored {
+              id
+              slug
+              title
+              description
+              cover_image {
+                url
+              }
+              scheduled
+              published_at
+            }
+            edited {
+              id
+              slug
+              title
+              description
+              cover_image {
+                url
+              }
+              scheduled
+              published_at
+            }
+            photography {
+              id
+              slug
+              title
+              description
+              cover_image {
+                url
+              }
+              scheduled
+              published_at
             }
             content {
               __typename

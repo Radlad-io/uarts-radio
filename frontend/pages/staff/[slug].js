@@ -5,14 +5,27 @@ import Moment from "react-moment";
 import { baseURL, getStaff, getStaffBySlug  } from '@lib/api'
 
 import Layout from '@components/layouts/Layout'
-import Navbar from "@components/modules/Navbar";
 import ContentParser from "@components/utils/ContentParser";
-import Footer from "@components/modules/Footer";
 import Socials from "@components/elements/Socials";
-import PostList from '@components/layouts/PostList';
+import CardList from '@components/layouts/CardList';
+import SectionTitle from '@components/elements/SectionTitle';
 
 
-export default function Staff({ staff }) {
+function removeDuplicates(originalArray, prop) {
+  var newArray = [];
+  var lookupObject  = {};
+
+  for(var i in originalArray) {
+     lookupObject[originalArray[i][prop]] = originalArray[i];
+  }
+
+  for(i in lookupObject) {
+      newArray.push(lookupObject[i]);
+  }
+   return newArray;
+}
+
+export default function Staff({ staff, preview }) {
 
   const router = useRouter()
   
@@ -20,11 +33,28 @@ export default function Staff({ staff }) {
     return <div>Loading...</div>
   }
 
-  const {name, created_at, socials, interests, profile_image, content } = staff;
+  const {
+    name, 
+    created_at, 
+    socials, 
+    interests, 
+    profile_image, 
+    content, 
+    authored,
+    edited,
+    photography
+  } = staff;
+
+  const contributions = []
+
+  Array.prototype.push.apply(contributions, authored );
+  Array.prototype.push.apply(contributions, edited );
+  Array.prototype.push.apply(contributions, photography );
+  
+  const articles = removeDuplicates(contributions, "id");
 
   return (
     <Layout title={`${name}`}>
-      <Navbar />
       <section className="container mx-auto px-3 xl:px-20">
       <div className="relative bg-white overflow-hidden">
         <div className="hidden lg:block lg:absolute lg:inset-0" aria-hidden="true">
@@ -72,8 +102,6 @@ export default function Staff({ staff }) {
                   <rect y="72" width="640" height="640" className="text-gray-50" fill="currentColor" />
                   <rect x="118" width="404" height="784" fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" />
                 </svg>
-                <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-                  <button type="button" className="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <span className="sr-only">Watch our video to learn more</span>
                     <Image
                       className='rounded-lg w-full sm:w-64'
@@ -81,11 +109,10 @@ export default function Staff({ staff }) {
                       alt={name}
                       width={800}
                       height={800}
-                      preload='true'
+                      priority={true}
                       objectFit='cover'
                     />
-                  </button>
-                </div>
+
               </div>
             </div>
           </main>
@@ -99,8 +126,9 @@ export default function Staff({ staff }) {
       {content.map((content) => (
           <ContentParser content={content} />
         ))}
+        
+        <CardList data={articles}/>
 
-        <Footer />
       
       <style jsx>{`
         h1 {
@@ -153,6 +181,7 @@ export default function Staff({ staff }) {
 
 export async function getStaticProps( context ) {
   const staff = await getStaffBySlug(context.params.slug)
+
   if (context.preview === true){
     const preview = context.preview
     return {
