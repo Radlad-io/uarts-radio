@@ -1,14 +1,10 @@
+import Link from "next/link";
+import Image from "next/image";
+import { baseURL } from "@lib/api";
+import ContentParser from "../utils/ContentParser";
+import Moment from "react-moment";
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { baseURL } from '@lib/api'
-import ContentParser from '../utils/ContentParser'
-import Moment from 'react-moment'
-
-function PostCard( props ) {
-
-  const { slug, image, type, title, description, date } = props;
-
+function PostCard({ slug, image, type, title, description, date }) {
   return (
     <>
       <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:max-w-none h-full">
@@ -16,15 +12,14 @@ function PostCard( props ) {
           <div className="flex-shrink-0">
             <Image
               key={image}
-              classNameName='h-48 w-full object-cover'
+              classNameName="h-48 w-full object-cover"
               src={baseURL + image}
               alt={title}
               width={600}
               height={375}
+              objectFit="cover"
               //TODO: figue out responsive images
-              // layout="responsive"
-              priority={true}
-              objectFit='cover'
+              priority
             />
           </div>
           <div className="flex-1 bg-white p-6 flex flex-col justify-between">
@@ -36,12 +31,8 @@ function PostCard( props ) {
               </p>
               <Link href={slug}>
                 <a className="block mt-2">
-                  <p className="text-xl font-semibold text-gray-900">
-                    {title}
-                  </p>
-                  <p className="mt-3 text-base text-gray-500">
-                    {description}
-                  </p>
+                  <p className="text-xl font-semibold text-gray-900">{title}</p>
+                  <p className="mt-3 text-base text-gray-500">{description}</p>
                 </a>
               </Link>
             </div>
@@ -67,13 +58,13 @@ function PostCard( props ) {
           </div>
         </div>
       </div>
-      <style  jsx>{`
-          .postType {
-              color: #D22630;
-          }
+      <style jsx>{`
+        .postType {
+          color: #d22630;
+        }
       `}</style>
-      </>
-  )
+    </>
+  );
 }
 
-export default PostCard
+export default PostCard;

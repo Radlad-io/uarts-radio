@@ -24,7 +24,7 @@ export default function Layout({ preview, children, title, description }) {
         <div>{children}</div>
       </main>
       <Footer />
-      <StreamingModal />
+      {/* <StreamingModal /> */}
       
     </>
   )

@@ -6,8 +6,6 @@ import { baseURL, getPosts, getStaff, getShows  } from '../lib/api'
 import { motion, useViewportScroll, useTransform } from "framer-motion"
 
 import Layout from '@components/layouts/Layout'
-import { PostCard } from '@components/modules/Card'
-import SectionTitle from '@components/elements/SectionTitle'
 import Moment from 'react-moment'
 import StaffList from '@components/elements/StaffList'
 import Tag from '@components/elements/Tag'
@@ -124,12 +122,11 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                   <Image 
                     className="w-full shadow-xl ring-1 ring-black ring-opacity-5 lg:h-full lg:w-auto lg:max-w-none" 
                     src={`${baseURL}${post.cover_image.url}`}
-                    width={750}
-                    height={550}
-                    // layout={'responsive'}
-                    // objectFit={'cover'}
-                    priority={true}
-                    alt="" 
+                    width={ 750 }
+                    height={ 550 }
+                    objectFit='cover'
+                    alt={ post.cover_image.alternativeText ? post.cover_image.alternativeText : null }
+                    priority
                     />
                 </div>
               </div>
@@ -165,7 +162,8 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                       width={400}
                       height={650}
                       objectFit='cover'
-                      alt="" 
+                      alt=""
+                      priority
                     />
                 </motion.div>
               </div>

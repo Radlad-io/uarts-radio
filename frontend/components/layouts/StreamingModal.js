@@ -1,4 +1,3 @@
-import useSWR from 'swr'
 import { useState } from 'react';
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
@@ -87,24 +86,8 @@ const BannerMotionVariants = {
 
 function StreamingModal() {
 
-    //TODO: Fix data fetching
-    // const{ data, error } = useSWR(`${baseURL}/test`, fetcher)
-
-    const [ streamingState, setStreamingState ] = useState(true)
-    const [ open, setOpen] = useState(false)
-
-    // if (error) {
-    //   console.log("Error")
-    // }
-  
-    // if (!data) {
-    //   console.log("No data")
-    // }
-
-    // if (data != null) {
-    //   console.log(data)
-    // }
-
+  const [ streamingState, setStreamingState ] = useState(true)
+  const [ open, setOpen] = useState(false)
 
   return (
     <> 

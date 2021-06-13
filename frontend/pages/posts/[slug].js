@@ -92,9 +92,9 @@ export default function Post({ post, preview }) {
                         className='rounded-lg w-full sm:w-64'
                         src={`${baseURL}${props.cover_image.url}`}
                         alt={props.title}
+                        priority
                         width={800}
                         height={500}
-                        preload='true'
                         objectFit='cover'
                       />
                     : ""
