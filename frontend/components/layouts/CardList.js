@@ -45,9 +45,9 @@ const item = {
 function CardList({data}) {
   return (
     <>
-      <section className="container mx-auto px-3 xl:px-20">
+      <section className="container mx-auto px-3 xl:px-20 mb-20">
         <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 py-10 gap-1 sm:gap-6 lg:gap-10 items-stretch md:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-6 lg:gap-10 items-stretch md:grid-cols-2 lg:grid-cols-3"
           variants={container}
           initial="hidden"
           animate="show"

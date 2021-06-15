@@ -13,10 +13,10 @@ function Tag({ tag }) {
                 .tag {
                     display: inline-block;
                     font-size: .8rem;
-                    margin: 1rem 1rem 0 0;
+                    margin: 1em 1em 0 0;
                     background-color: #D22630;
                     color: white;
-                    padding: .3rem .5rem .3rem .6rem;
+                    padding: .4rem .5rem .3rem .5rem;
                     text-transform: uppercase;
                     letter-spacing: .1rem;
                     font-weight: 700;

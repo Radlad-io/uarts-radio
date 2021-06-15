@@ -2,7 +2,7 @@
 // frontend/pages/index.js
 import Image from 'next/image'
 import Link from 'next/link'
-import { baseURL, getPosts, getStaff, getShows  } from '../lib/api'
+import { baseURL, getPosts, getStaff, getShows, getFeaturedStaff  } from '@lib/api'
 import { motion, useViewportScroll, useTransform } from "framer-motion"
 
 import Layout from '@components/layouts/Layout'
@@ -14,6 +14,8 @@ import Tag from '@components/elements/Tag'
 
 
 export default function Home({ post, featuredAuthor, featuredShows }) {
+
+  console.log(featuredAuthor)
 
   const container ={
     hidden: { opacity: 0, y:70 },
@@ -198,21 +200,21 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                       <dt className="text-base font-medium text-gray-500">Written</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
                         {/* TODO: Figure out how to add counts in the GraphQL query */}
-                        {/* {featuredAuthor.authored.length} Articles */}
+                        { featuredAuthor.authored.length } Articles
                       </dd>
                     </div>
 
                     <div className="border-t-2 mr-4 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">Edited</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
-                        {/* {featuredAuthor.edited.length} Articles */}
+                        {featuredAuthor.edited.length} Articles
                       </dd>
                     </div>
 
                     <div className="border-t-2 mr-4 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">Photography for</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
-                        {/* {featuredAuthor.photography.length} Articles */}
+                        {featuredAuthor.photography.length} Articles
                       </dd>
                     </div>
 
@@ -334,7 +336,7 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
 
 export async function getStaticProps() {
   const post = await getPosts(1)
-  const author = await getStaff(1)
+  const author = await getFeaturedStaff(1)
   const featuredAuthor = author[0]
   const featuredShows = await getShows(6)
 

@@ -244,11 +244,12 @@ export async function getPostBySlug(slug) {
   return data?.posts[0]
 }
 
-export async function getPosts(limit, order) {
+export async function getPosts(limit) {
+  
   const data = await fetchAPI(
       `
       query {
-          posts( publicationState: LIVE ${limit ? ", limit: "+limit : ""} ${order ? ', sort: "'+ limit +'"' : ''} ) {
+          posts( publicationState: LIVE, sort: "id:desc" ${limit ? ", limit: "+limit : ""}) {
               title
               slug
               description
@@ -673,3 +674,53 @@ export async function getStaff(limit) {
   return data?.users
 }
   
+export async function getFeaturedStaff(limit) {
+  const data = await fetchAPI(
+      `
+      query {
+        users( publicationState: LIVE ${limit ? ", limit: " + limit : ""} ) {
+            name
+            slug
+            short_biography
+            profile_image{
+              url
+            }
+            interests{
+              tag
+              slug
+            }
+            profile_image{
+              url
+            }
+            authored {
+              id
+            }
+            edited {
+              id
+            }
+            photography {
+              id
+            }
+        }
+      }
+
+      `
+  )
+  return data?.users
+}
+
+export async function getTags(limit) {
+  const data = await fetchAPI(
+      `
+      query {
+        tags( publicationState: LIVE ${limit ? ", limit: " + limit : ""} ) {
+            id
+            tag
+            slug
+        }
+      }
+
+      `
+  )
+  return data
+}
