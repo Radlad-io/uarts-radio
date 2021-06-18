@@ -1,7 +1,6 @@
 
 import Image from 'next/image'
 import styled from 'styled-components'
-import { baseURL } from '@lib/api'
 import { motion } from 'framer-motion'
 import Card from '@components/modules/Card'
 

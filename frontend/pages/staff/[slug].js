@@ -84,6 +84,8 @@ export default function Staff({ staff, preview }) {
                   Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua ad ad non deserunt sunt.
                 </p>
                 <br />
+                <br />
+                <p className="text-base font-medium text-gray-500">Interests</p>
                 {socials.map((social) => (
                   <Socials social={social}/>
                 ))}
@@ -126,6 +128,8 @@ export default function Staff({ staff, preview }) {
       {content.map((content) => (
           <ContentParser content={content} />
         ))}
+
+        <SectionTitle  title={`They've contributed to:`}/>
         
         <CardList data={articles}/>
 

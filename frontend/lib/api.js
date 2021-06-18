@@ -244,14 +244,19 @@ export async function getPostBySlug(slug) {
   return data?.posts[0]
 }
 
-export async function getPosts(limit) {
+export async function getPosts(limit, start, sort) {
   
   const data = await fetchAPI(
       `
       query {
-          posts( publicationState: LIVE, sort: "id:desc" ${limit ? ", limit: "+limit : ""}) {
+          posts( publicationState: LIVE,
+          ${limit ? ", limit: "+limit : ""} 
+          ${start ? ", start: "+start : ""}
+          ${sort ? ', sort: "id:'+sort+'"' : ""}
+          ){
               title
               slug
+              type
               description
               published_at
               tags {

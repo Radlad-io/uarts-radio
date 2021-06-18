@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { baseURL, getPosts } from "@lib/api";
 import { useQuery, useQueryClient } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 import Select from "react-select";
 import Layout from "@components/layouts/Layout";
 import Loarder from "@components/elements/Loader";
 import CardList from "@components/layouts/CardList";
+import Pagination from "@components/modules/Pagination";
 import { SortAscendingIcon, SearchIcon } from "@heroicons/react/solid";
+
+const postLimit = 9
 
 const fetchPosts = async (key) => {
 
@@ -18,40 +22,73 @@ const fetchPosts = async (key) => {
   const tagIDs = key.queryKey[2].tags.map((id) => `tags.id=${id}`);
   const tagQueryString = tagIDs.join("&");
 
+
+  // Pulls in and stringifys the sort passed to React Query
+  const sortQuery = key.queryKey[3].sort;
+
+  
   // Queries posts when type & tag params are passed
+  if (tagQueryString && typeQueryString && sortQuery) {
+    const fetchedPosts = await fetch(
+      `${baseURL}/posts?_sort=id:${sortQuery}&_limit=${postLimit}&${typeQueryString}&${tagQueryString}`
+    );
+    return fetchedPosts.json();
+  }
+
+  if (tagQueryString  && sortQuery) {
+    const fetchedPosts = await fetch(
+      `${baseURL}/posts?_sort=id:${sortQuery}&_limit=${postLimit}&${tagQueryString}`
+    );
+    return fetchedPosts.json();
+  }
+
+  if (typeQueryString && sortQuery) {
+    const fetchedPosts = await fetch(
+      `${baseURL}/posts?_sort=id:${sortQuery}&_limit=${postLimit}&${typeQueryString}`
+    );
+    return fetchedPosts.json();
+  }
+
   if (tagQueryString && typeQueryString) {
     const fetchedPosts = await fetch(
-      `${baseURL}/posts?_sort=id:DESC&${typeQueryString}&${tagQueryString}`
+      `${baseURL}/posts?_sort=id:DESC&_limit=${postLimit}&${typeQueryString}&${tagQueryString}`
     );
+    return fetchedPosts.json();
+  }
+
+  if (sortQuery) {
+    const fetchedPosts = await fetch(`${baseURL}/posts?_sort=id:${sortQuery}&_limit=${postLimit}`);
     return fetchedPosts.json();
   }
 
   // Queries posts when tag params are passed
   if (tagQueryString) {
-    const fetchedPosts = await fetch(`${baseURL}/posts?_sort=id:DESC&${tagQueryString}`);
+    const fetchedPosts = await fetch(`${baseURL}/posts?_sort=id:DESC&_limit=${postLimit}&${tagQueryString}`);
     return fetchedPosts.json();
   }
 
   // Queries posts when type params are passed
   if (typeQueryString) {
-    const fetchedPosts = await fetch(`${baseURL}/posts?_sort=id:DESC&${typeQueryString}`);
+    const fetchedPosts = await fetch(`${baseURL}/posts?_sort=id:DESC&_limit=${postLimit}&${typeQueryString}`);
     return fetchedPosts.json();
   }
 
   // Re-fetches posts when stale or reset
-  const fetchedPosts = await getPosts(9);
+  const fetchedPosts = await getPosts(9, 0 ,"desc");
   return fetchedPosts
   
 };
 
-export default function Home({ posts, tags, types }) {
+export default function Home({ posts, tags, types, sort }) {
 
   // React-Qyery configuration & state
   const queryClient = useQueryClient();
   const [type, setType] = useState([]);
   const [tagID, setTagID] = useState([]);
+  const [sortID, setSortID] = useState(null);
+
   const { data, status } = useQuery(
-    ["posts", { type: type }, { tags: tagID }], fetchPosts,{initialData: posts}
+    ["posts", { type: type }, { tags: tagID }, { sort: sortID}], fetchPosts,{ initialData: posts, keepPreviousData: true}
   );
 
   // Converts a string to Title Case. Used to adjust mis matched casing of tags
@@ -81,7 +118,6 @@ export default function Home({ posts, tags, types }) {
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = "opacity 300ms";
-
       return { ...provided, opacity, transition };
     },
   };
@@ -90,7 +126,7 @@ export default function Home({ posts, tags, types }) {
     <>
       <Layout title="UArts Radio" description="">
         <div className="container mx-auto px-3 xl:px-20">
-          <div className="mt-1 flex shadow-sm mt-6 mb-2 mx-6">
+          <div className="mt-1 flex shadow-sm mt-6 mb-2">
             <div className="relative flex items-stretch flex-grow focus-within:z-10">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <SearchIcon
@@ -100,8 +136,8 @@ export default function Home({ posts, tags, types }) {
               </div>
               <input
                 type="text"
-                name="email"
-                id="email"
+                name="search"
+                id="search"
                 className="focus:ring-gray-500 focus:border-gray-500 block w-full rounded-none pl-10 sm:text-sm border-gray-300 bg-gray-100"
                 placeholder="Search"
               />
@@ -114,8 +150,9 @@ export default function Home({ posts, tags, types }) {
               <span>Sort & Filter</span>
             </button>
           </div>
-          <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-6 mx-6 p-6 bg-gray-100">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-6 p-6 bg-gray-100">
             <Select
+              className="lg:col-span-2"
               styles={selectCustomStyles}
               getOptionLabel={(option) => `${option.tag.toTitleCase()}`}
               getOptionValue={(option) => option.id}
@@ -137,6 +174,7 @@ export default function Home({ posts, tags, types }) {
             />
 
             <Select
+              className="lg:col-span-2"
               styles={selectCustomStyles}
               getOptionLabel={(option) => option.label}
               getOptionValue={(option) => option.value}
@@ -156,6 +194,28 @@ export default function Home({ posts, tags, types }) {
                 },
               })}
             />
+
+            <Select
+              className="lg:col-span-1 md:col-span-2"
+              styles={selectCustomStyles}
+              getOptionLabel={(option) => option.label}
+              getOptionValue={(option) => option.value}
+              options={sort}
+              instanceId="sort"
+              placeholder="Sort by date"
+              onChange={value => setSortID(value.value)}
+              theme={(theme) => ({
+                ...theme,
+                borderRadius: 0,
+                colors: {
+                  ...theme.colors,
+                  primary: "black",
+                  danger: "#d22630",
+                  dangerLight: "#c2c2c2",
+                },
+              })}
+            />
+
           </div>
         </div>
 
@@ -173,14 +233,24 @@ export default function Home({ posts, tags, types }) {
 
         {status === "success" && <CardList data={data} />}
 
+        
+        <div className="container mx-auto px-3 xl:px-20">
+        <Pagination 
+          displaying={9}
+          results={11}
+          page={1}
+          totalPages={2}
+        />
+        </div>
+        <ReactQueryDevtools initialIsOpen={false} />
       </Layout>
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
 
-  const posts = await getPosts(9);
+  const posts = await getPosts(9, 0, "desc");
   const tags = await fetch(`${baseURL}/tags`);
   const tagsData = await tags.json();
 
@@ -194,11 +264,18 @@ export async function getServerSideProps() {
     { value: "7", label: "Opinion" },
   ];
 
+  const sort = [
+    { value: "desc", label: "Newest" },
+    { value: "asc", label: "Oldest" }
+  ];
+
   return {
     props: {
       posts: posts,
       tags: tagsData,
       types,
+      sort
     },
-  };
+    revalidate: 30
+  }
 }
