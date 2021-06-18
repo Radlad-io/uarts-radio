@@ -1,50 +1,68 @@
 
 // frontend/pages/index.js
+import { useEffect } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
 import { baseURL, getPosts, getStaff, getShows, getFeaturedStaff  } from '@lib/api'
-import { motion, useViewportScroll, useTransform } from "framer-motion"
+import { motion, useAnimation } from "framer-motion"
+import { useInView } from 'react-intersection-observer';
 
 import Layout from '@components/layouts/Layout'
 import Moment from 'react-moment'
 import StaffList from '@components/elements/StaffList'
 import Tag from '@components/elements/Tag'
 
+const ImageVariants = {
+  hidden: {
+    rotate: -20,
+    x:-510,
+    transition: {
+      duration: .65,
+      type: 'easeOut'
+    }
+  },
+  visible: {
+    rotate: 0,
+    x:0,
+    transition: {
+      duration: .65,
+      type: 'easeOut'
+    }
+  }
+}
 
-
+const TextVariants = {
+  hidden: { 
+    opacity: 0,
+    y:50
+  },
+  visible: {
+    opacity: 1,
+    y:0,
+    transition: {
+      duration: .75,
+      type: 'easeIn'
+    }
+  }
+}
 
 export default function Home({ post, featuredAuthor, featuredShows }) {
 
-  console.log(featuredAuthor)
+  const controls = useAnimation();
+  const { ref, inView } = useInView({
+    threshold: .6,
+    triggerOnce: true
+  });
 
-  const container ={
-    hidden: { opacity: 0, y:70 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        staggerChildren: 0.2,
-        type: 'easeIn'
-      }
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
     }
-  }
-
-  const item = {
-    hidden: { 
-      opacity: 0,
-      y:70
-    },
-    show: {
-      opacity: 1,
-      y:0,
-      transition: {
-        type: 'easeIn'
-      }
+    if (!inView) {
+      controls.start('hidden');
     }
-  }
+  }, [controls, inView]);
 
-  const { scrollYProgress } = useViewportScroll();
-  const scale = useTransform(scrollYProgress, [0, 1.2], [0.9, 1.3]);
 
   return (
     <Layout title='Home' description=''>
@@ -54,9 +72,6 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
           <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-20">
             <div 
               className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24"
-              variants={container}
-              initial="hidden"
-              animate="show"
             >
               <div>
                 <div className="mt-20">
@@ -136,7 +151,7 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
           </div>
 
           {/* Testimonial/stats section  */}
-          <div className="relative mt-20">
+          <div className="relative mt-20" ref={ref}>
             <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-24 lg:items-start">
               <div className="relative sm:py-16 lg:py-0">
                 <div aria-hidden="true" className="hidden sm:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-screen">
@@ -150,12 +165,13 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                     <rect width="404" height="392" fill="url(#02f20b47-fd69-4224-a62a-4c9de5c763f7)" />
                   </svg>
                 </div>
+                <div className="overflow-hidden">
                 <motion.div
+                  initial="hidden"
+                  animate={controls}
+                  variants={ImageVariants}
                   className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0 lg:max-w-none lg:py-20"
                   className="container"
-                  style={{
-                    scale
-                  }}
                 >
                   {/* Testimonial card  */}
                     <Image
@@ -164,58 +180,91 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                       width={400}
                       height={650}
                       objectFit='cover'
-                      alt=""
+                      alt={featuredAuthor.profile_image.alternativeText ? featuredAuthor.profile_image.alternativeText : null}
                       priority
                     />
                 </motion.div>
+                </div>
               </div>
 
               <div className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0">
                 {/* Content area  */}
-                <div className="pt-12 sm:pt-16 lg:pt-20">
-                  <h2 className="text-3xl text-gray-900 font-extrabold tracking-wide sm:text-4xl">
+                <div className="pt-12 sm:pt-16 lg:pt-20 overflow-hidden">
+                  <h2
+                   className="text-3xl text-gray-900 font-extrabold tracking-wide sm:text-4xl"
+                  >
                     Featured Staff                  
                   </h2>
-                  <h3 className="text-2xl text-gray-900 tracking-wide sm:text-4xl">
+                  <motion.h3
+                   className="text-2xl text-gray-900 tracking-wide sm:text-4xl"
+                   initial="hidden"
+                   animate={controls}
+                   variants={TextVariants}
+                   >
                     {featuredAuthor.name}
-                  </h3>
-                  <div className="mt-6 text-gray-500 space-y-6">
-                    <p className="text-lg">
+                  </motion.h3>
+                  <div className="mt-6 text-gray-500 space-y-6 overflow-hidden">
+                    <motion.p
+                      className="text-lg"
+                      initial="hidden"
+                      animate={controls}
+                      variants={TextVariants}
+                    >
                       {featuredAuthor.short_biography}
-                    </p>
+                    </motion.p>
                   </div>
                 </div>
 
                 {/* Stats section  */}
                 <div className="mt-10">
                   <dl className="grid grid-cols-2 gap-x-4 gap-y-8">
-                    <div className="border-t-2 mr-4 border-gray-100 pt-6">
+                    <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
                       <dt className="text-base font-medium text-gray-500">Joined</dt>
-                      <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                      <motion.dd 
+                        className="text-3xl font-extrabold tracking-tight text-gray-900"
+                        initial="hidden"
+                        animate={controls}
+                        variants={TextVariants}
+                        >
                       <Moment format="MMM Do YYYY ">{featuredAuthor.created_at}</Moment>
-                      </dd>
+                      </motion.dd>
                     </div>
 
-                    <div className="border-t-2 mr-4 border-gray-100 pt-6">
+                    <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
                       <dt className="text-base font-medium text-gray-500">Written</dt>
-                      <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                      <motion.dd 
+                        className="text-3xl font-extrabold tracking-tight text-gray-900"
+                        initial="hidden"
+                        animate={controls}
+                        variants={TextVariants}
+                      >
                         {/* TODO: Figure out how to add counts in the GraphQL query */}
                         { featuredAuthor.authored.length } Articles
-                      </dd>
+                      </motion.dd>
                     </div>
 
-                    <div className="border-t-2 mr-4 border-gray-100 pt-6">
+                    <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
                       <dt className="text-base font-medium text-gray-500">Edited</dt>
-                      <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                      <motion.dd 
+                        className="text-3xl font-extrabold tracking-tight text-gray-900"
+                        initial="hidden"
+                        animate={controls}
+                        variants={TextVariants}
+                      >
                         {featuredAuthor.edited.length} Articles
-                      </dd>
+                      </motion.dd>
                     </div>
 
-                    <div className="border-t-2 mr-4 border-gray-100 pt-6">
+                    <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
                       <dt className="text-base font-medium text-gray-500">Photography for</dt>
-                      <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                      <motion.dd 
+                        className="text-3xl font-extrabold tracking-tight text-gray-900"
+                        initial="hidden"
+                        animate={controls}
+                        variants={TextVariants}
+                      >
                         {featuredAuthor.photography.length} Articles
-                      </dd>
+                      </motion.dd>
                     </div>
 
                   </dl>
@@ -258,11 +307,13 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                     </a>
                   </div>
                 </div>
-                <motion.div 
+                <div 
                   className="mt-12 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-0 lg:grid-cols-2"
                 >
                   <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[0].title}</h4>
+                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">
+                      {featuredShows[0].title}
+                    </h4>
                   </div>
                   <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
                     <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[1].title}</h4>
@@ -279,7 +330,7 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                   <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
                     <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[5].title}</h4>
                   </div>
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>
