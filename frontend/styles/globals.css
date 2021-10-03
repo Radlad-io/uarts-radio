@@ -32,7 +32,3 @@ a:hover {
   color: #D22630;
 }
 
-::selection {
-  background: #D22630; /* WebKit/Blink Browsers */
-  color: black;
-}

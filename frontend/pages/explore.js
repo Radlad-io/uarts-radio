@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { baseURL, getPosts } from "@lib/api";
+import { baseURL, getPosts, getTagByValue } from "@lib/api";
 import { useQuery, useQueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 
@@ -9,6 +9,7 @@ import Loarder from "@components/elements/Loader";
 import CardList from "@components/layouts/CardList";
 import Pagination from "@components/modules/Pagination";
 import { SortAscendingIcon, SearchIcon } from "@heroicons/react/solid";
+
 
 const postLimit = 9
 
@@ -79,12 +80,13 @@ const fetchPosts = async (key) => {
   
 };
 
-export default function Home({ posts, tags, types, sort }) {
+export default function Home({ posts, tags, types, sort, initialQuery }) {
+
 
   // React-Qyery configuration & state
   const queryClient = useQueryClient();
   const [type, setType] = useState([]);
-  const [tagID, setTagID] = useState([]);
+  const [tagID, setTagID] = useState(initialQuery ? [initialQuery.id] : []);
   const [sortID, setSortID] = useState(null);
 
   const { data, status } = useQuery(
@@ -93,7 +95,7 @@ export default function Home({ posts, tags, types, sort }) {
 
   // Converts a string to Title Case. Used to adjust mis matched casing of tags
   String.prototype.toTitleCase = function () {
-    return this.replace(/\w\S*/g, function (txt) {
+      return this.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   };
@@ -124,37 +126,14 @@ export default function Home({ posts, tags, types, sort }) {
 
   return (
     <>
-      <Layout title="UArts Radio" description="">
+      <Layout title='Explore' description=''>
         <div className="container mx-auto px-3 xl:px-20">
-          <div className="mt-1 flex shadow-sm mt-6 mb-2">
-            <div className="relative flex items-stretch flex-grow focus-within:z-10">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon
-                  className="h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </div>
-              <input
-                type="text"
-                name="search"
-                id="search"
-                className="focus:ring-gray-500 focus:border-gray-500 block w-full rounded-none pl-10 sm:text-sm border-gray-300 bg-gray-100"
-                placeholder="Search"
-              />
-            </div>
-            <button className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
-              <SortAscendingIcon
-                className="h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
-              <span>Sort & Filter</span>
-            </button>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-6 p-6 bg-gray-100">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-6 pt-8">
             <Select
+              defaultValue={initialQuery ? [initialQuery] : [null]}
               className="lg:col-span-2"
               styles={selectCustomStyles}
-              getOptionLabel={(option) => `${option.tag.toTitleCase()}`}
+              getOptionLabel={(option) => `${option.tag}`}
               getOptionValue={(option) => option.id}
               options={tags}
               instanceId="tags"
@@ -248,11 +227,12 @@ export default function Home({ posts, tags, types, sort }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
 
   const posts = await getPosts(9, 0, "desc");
   const tags = await fetch(`${baseURL}/tags`);
   const tagsData = await tags.json();
+  const initialQuery = context.query.tags ? await getTagByValue(context.query.tags) : false
 
   const types = [
     { value: "1", label: "Article" },
@@ -273,9 +253,9 @@ export async function getStaticProps() {
     props: {
       posts: posts,
       tags: tagsData,
+      initialQuery,
       types,
       sort
-    },
-    revalidate: 30
+    }
   }
 }

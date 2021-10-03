@@ -18,8 +18,8 @@ function PostCard({ slug, image, type, title, description, date }) {
               width={600}
               height={375}
               objectFit="cover"
-              //TODO: figue out responsive images
-              priority
+              preload={true}
+              priority={true}
             />
           </div>
           <div className="flex-1 bg-white p-6 flex flex-col justify-between">

@@ -71,7 +71,7 @@ export default function Post({ post, preview }) {
                 </p>
                 <br />
                 {props.tags.map((tag) => (
-                    <Link href={`/explore?tags.slug=${tag.slug}`}><a className="tag">{tag.tag}</a></Link>
+                    <Link href={`/explore?tags=${tag.slug}`}><a className="tag">{tag.tag}</a></Link>
                 ))}
               
               </div>
@@ -92,10 +92,11 @@ export default function Post({ post, preview }) {
                         className='rounded-lg w-full sm:w-64'
                         src={`${baseURL}${props.cover_image.url}`}
                         alt={props.title}
-                        priority
                         width={800}
                         height={500}
                         objectFit='cover'
+                        preload={true}
+                        priority={true}
                       />
                     : ""
                     }

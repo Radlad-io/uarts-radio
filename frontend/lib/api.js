@@ -729,3 +729,19 @@ export async function getTags(limit) {
   )
   return data
 }
+
+export async function getTagByValue(value) {
+  const data = await fetchAPI(
+      `
+      query {
+        tags(  where:{slug:"${value}"} ) {
+            id
+            tag
+            slug
+        }
+      }
+
+      `
+  )
+  return data?.tags[0]
+}

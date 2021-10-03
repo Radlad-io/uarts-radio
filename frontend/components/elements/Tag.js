@@ -6,7 +6,7 @@ function Tag({ tag }) {
     const router = useRouter()
     return (
         <>
-            <Link key={tag.id} href={`/explore?tags.slug=${tag.slug}`}><a className={router.pathname == `/explore?tags.slug=${tag.slug}` ? "active" : "tag"}>{tag.tag}</a></Link>
+            <Link key={tag.id} href={`/explore?tags=${tag.slug}`}><a className={router.pathname == `/explore?tags.slug=${tag.slug}` ? "active" : "tag"}>{tag.tag}</a></Link>
 
             <style jsx>{`
 

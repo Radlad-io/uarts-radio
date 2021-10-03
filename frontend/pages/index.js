@@ -4,64 +4,14 @@ import { useEffect } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
 import { baseURL, getPosts, getStaff, getShows, getFeaturedStaff  } from '@lib/api'
-import { motion, useAnimation } from "framer-motion"
-import { useInView } from 'react-intersection-observer';
 
 import Layout from '@components/layouts/Layout'
 import Moment from 'react-moment'
 import StaffList from '@components/elements/StaffList'
 import Tag from '@components/elements/Tag'
 
-const ImageVariants = {
-  hidden: {
-    rotate: -20,
-    x:-510,
-    transition: {
-      duration: .65,
-      type: 'easeOut'
-    }
-  },
-  visible: {
-    rotate: 0,
-    x:0,
-    transition: {
-      duration: .65,
-      type: 'easeOut'
-    }
-  }
-}
-
-const TextVariants = {
-  hidden: { 
-    opacity: 0,
-    y:50
-  },
-  visible: {
-    opacity: 1,
-    y:0,
-    transition: {
-      duration: .75,
-      type: 'easeIn'
-    }
-  }
-}
 
 export default function Home({ post, featuredAuthor, featuredShows }) {
-
-  const controls = useAnimation();
-  const { ref, inView } = useInView({
-    threshold: .6,
-    triggerOnce: true
-  });
-
-  useEffect(() => {
-    if (inView) {
-      controls.start('visible');
-    }
-    if (!inView) {
-      controls.start('hidden');
-    }
-  }, [controls, inView]);
 
 
   return (
@@ -76,11 +26,9 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
               <div>
                 <div className="mt-20">
                   <div>
-                    <a href="#" className="inline-flex space-x-4">
-                      <span className="rounded bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-500 tracking-wide uppercase">
+                    <span className="rounded bg-rose-50 py-1 text-xs font-semibold text-rose-500 tracking-wide uppercase">
                       <Moment format="MMM Do ">{post.published_at}</Moment>
-                      </span>
-                    </a>
+                    </span>
                   </div>
                   <div className="mt-6 sm:max-w-xl">
                     <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
@@ -143,15 +91,16 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                     height={ 550 }
                     objectFit='cover'
                     alt={ post.cover_image.alternativeText ? post.cover_image.alternativeText : null }
-                    priority
+                    preload={true}
+                    priority={true}
                     />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Testimonial/stats section  */}
-          <div className="relative mt-20" ref={ref}>
+          {/* Author section  */}
+          <div className="relative mt-20">
             <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-24 lg:items-start">
               <div className="relative sm:py-16 lg:py-0">
                 <div aria-hidden="true" className="hidden sm:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-screen">
@@ -166,14 +115,11 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                   </svg>
                 </div>
                 <div className="overflow-hidden">
-                <motion.div
-                  initial="hidden"
-                  animate={controls}
-                  variants={ImageVariants}
+                <div
                   className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0 lg:max-w-none lg:py-20"
                   className="container"
                 >
-                  {/* Testimonial card  */}
+
                     <Image
                       className="absolute inset-0 h-full w-full object-cover" 
                       src={`${baseURL}${featuredAuthor.profile_image.url}`}
@@ -181,9 +127,10 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                       height={650}
                       objectFit='cover'
                       alt={featuredAuthor.profile_image.alternativeText ? featuredAuthor.profile_image.alternativeText : null}
-                      priority
+                      preload={true}
+                      priority={true}
                     />
-                </motion.div>
+                </div>
                 </div>
               </div>
 
@@ -195,23 +142,17 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                   >
                     Featured Staff                  
                   </h2>
-                  <motion.h3
+                  <h3
                    className="text-2xl text-gray-900 tracking-wide sm:text-4xl"
-                   initial="hidden"
-                   animate={controls}
-                   variants={TextVariants}
                    >
                     {featuredAuthor.name}
-                  </motion.h3>
+                  </h3>
                   <div className="mt-6 text-gray-500 space-y-6 overflow-hidden">
-                    <motion.p
+                    <p
                       className="text-lg"
-                      initial="hidden"
-                      animate={controls}
-                      variants={TextVariants}
                     >
                       {featuredAuthor.short_biography}
-                    </motion.p>
+                    </p>
                   </div>
                 </div>
 
@@ -220,52 +161,44 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                   <dl className="grid grid-cols-2 gap-x-4 gap-y-8">
                     <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
                       <dt className="text-base font-medium text-gray-500">Joined</dt>
-                      <motion.dd 
-                        className="text-3xl font-extrabold tracking-tight text-gray-900"
-                        initial="hidden"
-                        animate={controls}
-                        variants={TextVariants}
-                        >
-                      <Moment format="MMM Do YYYY ">{featuredAuthor.created_at}</Moment>
-                      </motion.dd>
+                      <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                      <Moment format="MM/DD/YY ">{featuredAuthor.created_at}</Moment>
+                      </dd>
                     </div>
 
-                    <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
-                      <dt className="text-base font-medium text-gray-500">Written</dt>
-                      <motion.dd 
-                        className="text-3xl font-extrabold tracking-tight text-gray-900"
-                        initial="hidden"
-                        animate={controls}
-                        variants={TextVariants}
-                      >
-                        {/* TODO: Figure out how to add counts in the GraphQL query */}
-                        { featuredAuthor.authored.length } Articles
-                      </motion.dd>
-                    </div>
+                    {featuredAuthor.authored.length > 0 ?
+                        <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
+                        <dt className="text-base font-medium text-gray-500">Written</dt>
+                        <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                          {featuredAuthor.authored.length} Articles
+                        </dd>
+                      </div>
+                      :
+                      <></>
+                    }
 
-                    <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
-                      <dt className="text-base font-medium text-gray-500">Edited</dt>
-                      <motion.dd 
-                        className="text-3xl font-extrabold tracking-tight text-gray-900"
-                        initial="hidden"
-                        animate={controls}
-                        variants={TextVariants}
-                      >
-                        {featuredAuthor.edited.length} Articles
-                      </motion.dd>
-                    </div>
 
-                    <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
-                      <dt className="text-base font-medium text-gray-500">Photography for</dt>
-                      <motion.dd 
-                        className="text-3xl font-extrabold tracking-tight text-gray-900"
-                        initial="hidden"
-                        animate={controls}
-                        variants={TextVariants}
-                      >
-                        {featuredAuthor.photography.length} Articles
-                      </motion.dd>
-                    </div>
+                    {featuredAuthor.edited.length > 0 ?
+                        <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
+                        <dt className="text-base font-medium text-gray-500">Editor of</dt>
+                        <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                          {featuredAuthor.edited.length} Articles
+                        </dd>
+                      </div>
+                      :
+                      <></>
+                    }
+
+                    {featuredAuthor.photography.length > 0 ?
+                        <div className="border-t-2 mr-4 border-gray-100 pt-6 overflow-hidden">
+                        <dt className="text-base font-medium text-gray-500">Photography for</dt>
+                        <dd className="text-3xl font-extrabold tracking-tight text-gray-900">
+                          {featuredAuthor.photography.length} Articles
+                        </dd>
+                      </div>
+                      :
+                      <></>
+                    }
 
                   </dl>
                   <br />
@@ -280,7 +213,7 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                     </div>
 
                   <div className="mt-10">
-                    <a href="#" className="text-base font-medium text-rose-500">
+                    <a href={`/staff/${featuredAuthor.slug}`} className="text-base font-medium text-rose-500">
                       Learn more about {featuredAuthor.name} &rarr;
                     </a>
                   </div>
@@ -302,34 +235,21 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                     Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque tristique pellentesque. Blandit amet, sed aenean erat arcu morbi. Cursus faucibus nunc nisl netus morbi vel porttitor vitae ut. Amet vitae fames senectus vitae.
                   </p>
                   <div className="mt-6">
-                    <a href="#" className="text-base font-medium text-rose-500">
+                    <a href="/shows" className="text-base font-medium text-rose-500">
                       Checkout all of our shows &rarr;
                     </a>
                   </div>
                 </div>
-                <div 
-                  className="mt-12 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-0 lg:grid-cols-2"
-                >
-                  <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">
-                      {featuredShows[0].title}
-                    </h4>
-                  </div>
-                  <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[1].title}</h4>
-                  </div>
-                  <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[2].title}</h4>
-                  </div>
-                  <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[3].title}</h4>
-                  </div>
-                  <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[4].title}</h4>
-                  </div>
-                  <div className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{featuredShows[5].title}</h4>
-                  </div>
+                <div className="mt-12 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-0 lg:grid-cols-2">
+                  {featuredShows.map((show) => {
+                    return (
+                      <Link href={`/shows/${show.slug}`}>
+                        <div className="show-card col-span-1 flex justify-center py-8 px-8 bg-gray-50">
+                          <h4 className="text-lg text-center uppercase text-gray-300 font-bold self-center">{show.title}</h4>
+                        </div>
+                      </Link>
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -380,6 +300,17 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
           </div>
         </main> 
         </div>
+        
+        <style jsx>{`
+        .show-card:hover {
+          background: #D22630;
+        }
+
+        .show-card:hover h4 {
+          color: white;
+        }
+
+        `}</style>
           
     </Layout>
   )

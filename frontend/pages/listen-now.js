@@ -1,36 +1,26 @@
+// frontend/pages/listen-now.js
 
-// frontend/pages/index.js
-import Image from 'next/image'
-import Link from 'next/link'
-import { baseUrl, fetchQuery } from '../utilities/utils'
 
 import Layout from '@components/layouts/Layout'
-import { PostCard } from '@components/modules/Card'
 import Footer from '@components/modules/Footer'
 import SectionTitle from '@components/elements/SectionTitle'
-
 
 
 export default function Home({ posts }) {
 
   return (
-    <Layout title='UArts Radio' description=''>
+    <Layout title='Listen' description=''>
 
-      <SectionTitle title={'Listen Now'} />
-
-        <Footer />
+      <div className="container mx-auto px-3 xl:px-20 mb-20">
+        <audio controls src="http://99.198.118.250:8245/stream"></audio>
+      </div>
+       
+      <Footer />
       <style jsx>{`
-
+        audio {
+          width: 100%;
+        }
       `}</style>
     </Layout>
   )
-}
-
-export async function getServerSideProps() {
-  const posts = await fetchQuery('posts', '?featured=true')
-  return {
-    props: {
-      posts
-    }
-  }
 }

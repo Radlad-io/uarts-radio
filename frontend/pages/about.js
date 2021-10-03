@@ -18,7 +18,7 @@ const HeadingStyle = styled.h1`
 
 export default function About({ posts }) {
   return (
-    <Layout title="UArts Radio" description="">
+    <Layout title="About" description="">
 
       <div className="container mx-auto px-3 xl:px-20">
       <HeadingStyle>
