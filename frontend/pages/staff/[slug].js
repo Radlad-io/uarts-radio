@@ -90,7 +90,7 @@ export default function Staff({ staff, preview }) {
                   <Socials social={social}/>
                 ))}
                 {interests.map((tag) => (
-                    <Link href={`/explore?tags.tag=${tag.tag}`}><a className="tag">{tag.tag}</a></Link>
+                    <Link href={`/explore?tags=${tag.tag}`}><a className="tag">{tag.tag}</a></Link>
                 ))}
               
               </div>
@@ -111,6 +111,7 @@ export default function Staff({ staff, preview }) {
                       alt={name}
                       width={800}
                       height={800}
+                      layout='responsive'
                       priority={true}
                       objectFit='cover'
                     />

@@ -38,7 +38,7 @@ export default function Show({ show }) {
         Tags
         </p>
         {tags.map((tag) => (
-              <Link href="/posts"><p className="tag">{tag.tag}</p></Link>
+              <Link href={`/explore?tags=${tag.slug}`}><p className="tag">{tag.tag}</p></Link>
           ))} 
       </div>
 

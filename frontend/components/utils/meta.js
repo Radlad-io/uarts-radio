@@ -4,6 +4,7 @@ import Head from 'next/head'
 export default function Meta() {
   return (
     <Head>
+      {/* TODO: Check to make sure these favicons are linked right */}
       <link
         rel="apple-touch-icon"
         sizes="180x180"

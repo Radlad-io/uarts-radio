@@ -90,8 +90,8 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                     width={ 750 }
                     height={ 550 }
                     objectFit='cover'
+                    layout='responsive'
                     alt={ post.cover_image.alternativeText ? post.cover_image.alternativeText : null }
-                    preload={true}
                     priority={true}
                     />
                 </div>

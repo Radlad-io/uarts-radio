@@ -43,15 +43,19 @@ function Navbar() {
                             </a>
                         </span>
                         </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="hamburger h-6 w-6 ml-8" viewBox="0 0 24 24" stroke="black">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
                     </nav>
                 </div>
+
             </header>
             <style jsx>{`
 
             h1 {
-            text-transform: uppercase;
-            font-size: 1.5rem;
-            font-weight: 900;
+                text-transform: uppercase;
+                font-size: 1.5rem;
+                font-weight: 900;
             }
             
             li {
@@ -79,6 +83,10 @@ function Navbar() {
             .active > a {
                 color: black;
                 font-weight: 700;
+            }
+
+            .hamburger:hover {
+                stroke: #D22630;
             }
     
             `}

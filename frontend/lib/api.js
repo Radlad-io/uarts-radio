@@ -146,6 +146,7 @@ export async function getPostBySlug(slug) {
       query {
           posts( publicationState: LIVE, where:{slug:"${slug}"} ) {
               title
+              type
               slug
               description
               published_at

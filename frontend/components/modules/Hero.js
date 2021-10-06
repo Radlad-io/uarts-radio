@@ -23,7 +23,6 @@ function Hero({ content }) {
             alt={content.title}
             width={600}
             height={350}
-            preload={true}
             priority={true}
             objectFit='cover'
           />

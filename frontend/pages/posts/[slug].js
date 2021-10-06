@@ -21,7 +21,6 @@ export default function Post({ post, preview }) {
 
   //TODO: Destructure incoming post data
   const props = post;
-
   return (
     <Layout title={props.title}>
       { preview === true && props.published_at === null ? <PreviewBanner /> : ""}
@@ -42,12 +41,15 @@ export default function Post({ post, preview }) {
           <main className="mt-16 mx-auto px-4 sm:mt-24 sm:px-6 lg:mt-32">
             <div className="lg:grid lg:grid-cols-12 lg:gap-8">
               <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+              <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">{props.published_at === null ? "This Post has not been published yet" : <Moment format="MMM Do YYYY">{props.published_at}</Moment>}⠀|⠀<a href={`/explore?type=${props.type}`} className="postType titlecase hover:underline">
+                      {props.type}
+                    </a></span>
                 <h1>
-                  <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">{props.published_at === null ? "This Post has not been published yet" : <Moment format="MMM Do YYYY">{props.published_at}</Moment>}</span>
                   <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
                     <span className="block text-gray-900 tracking-wide">{props.title}</span>
                   </span>
                 </h1>
+
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                   {props.description}
                 </p>
@@ -69,6 +71,7 @@ export default function Post({ post, preview }) {
                   </b>
                     {props.photographers.length > 0 ? <StaffList staff={props.photographers} /> : ""}
                 </p>
+                
                 <br />
                 {props.tags.map((tag) => (
                     <Link href={`/explore?tags=${tag.slug}`}><a className="tag">{tag.tag}</a></Link>
@@ -94,8 +97,8 @@ export default function Post({ post, preview }) {
                         alt={props.title}
                         width={800}
                         height={500}
-                        objectFit='cover'
-                        preload={true}
+                        objectFit={'cover'}
+                        layout={'intrinsic'}
                         priority={true}
                       />
                     : ""
@@ -160,6 +163,10 @@ export default function Post({ post, preview }) {
           cursor:pointer;
           color: white;
           background-color: #DB5159;
+        }
+
+        .postType {
+          color: #d22630;
         }
 
         `}

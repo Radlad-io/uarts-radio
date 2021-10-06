@@ -54,6 +54,7 @@ function CardList({data}) {
           {data.map((data) => (
               <motion.div
                 variants={item}
+                key={data.slug}
               >
               <Card
                 slug={`/posts/${data.slug}`}

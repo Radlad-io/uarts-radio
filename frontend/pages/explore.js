@@ -8,8 +8,6 @@ import Layout from "@components/layouts/Layout";
 import Loarder from "@components/elements/Loader";
 import CardList from "@components/layouts/CardList";
 import Pagination from "@components/modules/Pagination";
-import { SortAscendingIcon, SearchIcon } from "@heroicons/react/solid";
-
 
 const postLimit = 9
 
@@ -80,13 +78,12 @@ const fetchPosts = async (key) => {
   
 };
 
-export default function Home({ posts, tags, types, sort, initialQuery }) {
-
-
+export default function Home({ posts, tags, types, sort, initialQueryType, initialQuery }) {
   // React-Qyery configuration & state
   const queryClient = useQueryClient();
-  const [type, setType] = useState([]);
-  const [tagID, setTagID] = useState(initialQuery ? [initialQuery.id] : []);
+  // Sets initial queries based on URL params
+  const [type, setType] = useState(initialQueryType === 'type' ? [initialQuery.type] : []);
+  const [tagID, setTagID] = useState(initialQueryType === 'tag' ? [initialQuery.id] : []);
   const [sortID, setSortID] = useState(null);
 
   const { data, status } = useQuery(
@@ -130,10 +127,10 @@ export default function Home({ posts, tags, types, sort, initialQuery }) {
         <div className="container mx-auto px-3 xl:px-20">
           <div className="grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-6 pt-8">
             <Select
-              defaultValue={initialQuery ? [initialQuery] : [null]}
+              defaultValue={initialQueryType === 'tag' ? [initialQuery] : [null]}
               className="lg:col-span-2"
               styles={selectCustomStyles}
-              getOptionLabel={(option) => `${option.tag}`}
+              getOptionLabel={(option) => `${option.tag.toTitleCase()}`}
               getOptionValue={(option) => option.id}
               options={tags}
               instanceId="tags"
@@ -153,6 +150,7 @@ export default function Home({ posts, tags, types, sort, initialQuery }) {
             />
 
             <Select
+              defaultValue={initialQueryType === 'type' ? [types.find( ({ label }) => label === initialQuery.type )] : [null]}
               className="lg:col-span-2"
               styles={selectCustomStyles}
               getOptionLabel={(option) => option.label}
@@ -229,30 +227,33 @@ export default function Home({ posts, tags, types, sort, initialQuery }) {
 
 export async function getServerSideProps(context) {
 
-  const posts = await getPosts(9, 0, "desc");
-  const tags = await fetch(`${baseURL}/tags`);
-  const tagsData = await tags.json();
-  const initialQuery = context.query.tags ? await getTagByValue(context.query.tags) : false
-
+  // TODO: Use API for Types
   const types = [
-    { value: "1", label: "Article" },
-    { value: "2", label: "Podcast" },
-    { value: "3", label: "Video" },
-    { value: "4", label: "Event" },
-    { value: "5", label: "Exhibition" },
-    { value: "6", label: "Interview" },
-    { value: "7", label: "Opinion" },
+    { value: "0", label: "Article" },
+    { value: "1", label: "Podcast" },
+    { value: "2", label: "Video" },
+    { value: "3", label: "Event" },
+    { value: "4", label: "Exhibition" },
+    { value: "5", label: "Interview" },
+    { value: "6", label: "Opinion" },
   ];
 
   const sort = [
     { value: "desc", label: "Newest" },
     { value: "asc", label: "Oldest" }
   ];
+  
+  const posts = await getPosts(9, 0, "desc");
+  const tags = await fetch(`${baseURL}/tags`);
+  const tagsData = await tags.json();
+  const initialQuery = context.query.tags ? await getTagByValue(context.query.tags) : context.query.type ? context.query : false
+  const initialQueryType = context.query.tags ? 'tag' : context.query.type ? 'type' : false
 
   return {
     props: {
       posts: posts,
       tags: tagsData,
+      initialQueryType, 
       initialQuery,
       types,
       sort

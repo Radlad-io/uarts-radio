@@ -5,7 +5,7 @@ import { getStaff } from '@lib/api'
 import { baseUrl, fetchQuery } from '../../utilities/utils'
 
 import Layout from '@components/layouts/Layout'
-import PostCard from '@components/modules/Card'
+import Card from '@components/modules/Card'
 
 
 export default function Home({ staff }) {
@@ -15,7 +15,7 @@ export default function Home({ staff }) {
 
         <section className='grid grid-cols-1 sm:grid-cols-2 py-10 gap-1 sm:gap-6 lg:gap-10 items-stretch md:grid-cols-2 lg:grid-cols-3'>
           {staff.map((staff) => (
-            <PostCard
+            <Card
               slug={`/staff/${staff.slug}`}
               key={staff.id}
               image={staff.profile_image.url}

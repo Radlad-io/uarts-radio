@@ -183,7 +183,7 @@ function Footer({ content }) {
           </div>
           <div className="mt-12 border-t border-gray-200 pt-8">
             <p className="text-base text-gray-400 xl:text-center">
-              &copy; 2021 UArts Radio. All rights reserved.
+              &copy; 2021 UArts Radio. All rights reserved. Developed by <a href="https://ultravioletstudio.co">Ultraviolet Studio</a>.
             </p>
           </div>
         </div>
