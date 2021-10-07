@@ -20,8 +20,8 @@ function PostCard({ slug, image, thubmnail, type, title, description, date }) {
               width={600}
               height={375}
               objectFit={"cover"}
-              placeholder={baseURL + thubmnail}
-              blurDataURL={image}
+              placeholder={'blur'}
+              blurDataURL={baseURL + thubmnail}
               layout={'intrinsic'}
               priority={true}
             />
