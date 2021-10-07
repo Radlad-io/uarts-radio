@@ -552,6 +552,7 @@ export async function getStaffBySlug(slug) {
               description
               cover_image {
                 url
+                formats
               }
               scheduled
               published_at
@@ -563,6 +564,7 @@ export async function getStaffBySlug(slug) {
               description
               cover_image {
                 url
+                formats
               }
               scheduled
               published_at
@@ -574,6 +576,7 @@ export async function getStaffBySlug(slug) {
               description
               cover_image {
                 url
+                formats
               }
               scheduled
               published_at
