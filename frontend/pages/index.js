@@ -89,6 +89,8 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                     src={`${baseURL}${post.cover_image.url}`}
                     width={ 750 }
                     height={ 550 }
+                    placeholder="blur"
+                    blurDataURL={baseURL + post.cover_image.formats.thumbnail.url}
                     objectFit='cover'
                     layout='responsive'
                     alt={ post.cover_image.alternativeText ? post.cover_image.alternativeText : null }
@@ -98,7 +100,6 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
               </div>
             </div>
           </div>
-
           {/* Author section  */}
           <div className="relative mt-20">
             <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-24 lg:items-start">
@@ -119,13 +120,14 @@ export default function Home({ post, featuredAuthor, featuredShows }) {
                   className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0 lg:max-w-none lg:py-20"
                   className="container"
                 >
-
                     <Image
                       className="absolute inset-0 h-full w-full object-cover" 
                       src={`${baseURL}${featuredAuthor.profile_image.url}`}
                       width={400}
                       height={650}
                       objectFit='cover'
+                      placeholder={`blur`}
+                      blurDataURL={`${baseURL}${featuredAuthor.profile_image.formats.thumbnail.url}`}
                       alt={featuredAuthor.profile_image.alternativeText ? featuredAuthor.profile_image.alternativeText : null}
                       preload={true}
                       priority={true}

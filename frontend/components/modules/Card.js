@@ -4,13 +4,14 @@ import { baseURL } from "@lib/api";
 import ContentParser from "../utils/ContentParser";
 import Moment from "react-moment";
 
-function PostCard({ slug, image, type, title, description, date }) {
+function PostCard({ slug, image, thubmnail, type, title, description, date }) {
   return (
     <>
       <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:max-w-none h-full">
         <div className="flex flex-col shadow-lg overflow-hidden">
           <div className="flex-shrink-0">
           <Link href={slug}>
+            {/* TODO: Add a 10px variant to the strapi upload plugin for use with the blurDataURL */}
             <Image
               key={image}
               className="h-48 w-full object-cover"
@@ -18,7 +19,9 @@ function PostCard({ slug, image, type, title, description, date }) {
               alt={title}
               width={600}
               height={375}
-              objectFit="cover"
+              objectFit={"cover"}
+              placeholder={baseURL + thubmnail}
+              blurDataURL={image}
               layout={'intrinsic'}
               priority={true}
             />

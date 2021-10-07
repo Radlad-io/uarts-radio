@@ -267,6 +267,7 @@ export async function getPosts(limit, start, sort) {
               }
               cover_image {
                 url
+                formats
               }
               authors {
                 name
@@ -697,6 +698,7 @@ export async function getFeaturedStaff(limit) {
             }
             profile_image{
               url
+              formats
             }
             authored {
               id

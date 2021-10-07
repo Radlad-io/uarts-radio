@@ -60,6 +60,7 @@ function CardList({data}) {
                 slug={`/posts/${data.slug}`}
                 key={data.id}
                 image={data.cover_image.url}
+                thumbnail={data.cover_image.formats.thumbnail.url}
                 type={data.type}
                 title={data.title}
                 description={data.description}
